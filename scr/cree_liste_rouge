@@ -1,14 +1,9 @@
 #!/bin/bash
 
-
-
 >file
 >listeRouge
 
-
 dpkg --status > file
-
-
 
 while read ligne
 do
@@ -29,6 +24,9 @@ do
             else if [[ $a == 1 && $ligne == *'important'* ]]; then
                 echo $nomPa >> listeRouge
                 let a--
+                else if [[ $ligne == *'required'* ]]; then
+                    echo $nomPa >> listeRouge
+                fi
             fi
         fi
     fi
@@ -38,4 +36,3 @@ do
 done < file
 
 rm file
-
