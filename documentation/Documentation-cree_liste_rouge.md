@@ -8,6 +8,6 @@ Le programme _createdRedList_ est un script bash qui permet de créer une liste 
 ## Description de la conception et réalisation du script
 Au début du script, on crée un fichier _file_ ainsi q'un fichier _listeRouge_. Par la suite, on redirige la sortie de commande _dpkg --status_ dans le fichier _file_. Après cela, on lit chaque ligne du fichier _file_. Lorsqu'une ligne contenant la chaîne "Package: " est trouvée on initialise une variable avec la valeurs 3 car il faut aller chercher la ligne ou l'on trouve la priortité du paquet touvé. Comme on peut le voir sur la capture d'écran suivante on retrouve en orange la ligne contenant la priortité du paquet.
 
-![alt text](documentation/Image/Capture_dpkg--status.png) 
+![alt text](./Image/Capture_dpkg--status.png) 
 
 Ensuite grace à la variable shell on découpe la ligne contenant le nom du paquet que l'on stock .Ensuite nous allons 3 lignes plus bas, c'est à dire la ligne contenant la priorité du paquet en question. Après cela on regarde si elle correspond à la priorité **important** ou **required**. Si c'est le cas on empile le nom du paquet dans le fichier _listeRouge_. A la fin du script, on supprime le fichier _file_ pour alléger le sytème.
