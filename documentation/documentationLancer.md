@@ -22,5 +22,6 @@ On écrit ensuite dans le fichier /etc/sudoers la ligne suivante. Elle donnera �
 
 On écrit ensuite dans le fichier /etc/bash.bashrc la fonction suivante. Elle sera appellée lorsqu'une commande introuvable est inscrite dans la console. Elle essayera d'installer la un paquet qui a pour nom la commande introuvable en question. Si aucun paquet ne correspond au nom indiqué, alors elle marque sur la console _commande introuvable_. Mais si le paquet existe, alors elle l'installera et l'ouvrira automatiquement dès la fin de l'installation.
 
-![alt text](./Image/Capture command_not_found_handle.png)
+![alt text](./Image/Capture_command_not_found_handle.png)
+
 
