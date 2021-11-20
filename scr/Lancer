@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Veuillez saisir l'utilisateur : "
+read nom
+chemin=$(pwd)
+echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" | sudo tee -a /etc/sudoers
+
+echo -e "command_not_found_handle() {\n    sudo $chemin/scriptInstallation \"\$1\";\n    if [ -e /usr/bin/\"\$1\" ]\n    then\n        \"\$1\";\n    else\n        echo \"commande introuvable\";\n    fi\n    return 127;\n}" | sudo tee -a /etc/bash.bashrc
