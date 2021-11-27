@@ -1,0 +1,4 @@
+createdRedList
+echo '== Liste rouge =='
+cat listeRouge
+rm listeRouge
