@@ -9,4 +9,4 @@ echo -e "command_not_found_handle() {\n    sudo $chemin/scriptInstallation \"\$1
 
 # On ajoute au PATH le chemin courant pour pouvoir executer 
 # les scripts n'importe ou dans le fichier
-echo  "export PATH=\"\$PATH:$(pwd)\"" >> /home/$(whoami)/.bashrc
+echo  "export PATH=\"\$PATH:$(pwd)\"" >> /home/$nom/.bashrc
