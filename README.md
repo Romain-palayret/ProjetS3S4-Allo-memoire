@@ -6,3 +6,5 @@ Ce projet permet l'allocution dynamique de la masse logiciel d'un système GNU/L
 **DEPRECQ** Corentin  
 **HELG** Guillaume  
 **SALOME** Loup  
+
+Date de rendu :
