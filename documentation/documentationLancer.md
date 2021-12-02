@@ -24,4 +24,7 @@ On écrit ensuite dans le fichier /etc/bash.bashrc la fonction suivante. Elle se
 
 ![alt text](./Image/Capture_command_not_found_handle.png)
 
+![aly text]![image](https://user-images.githubusercontent.com/81689403/144429286-7b3531a1-09ec-444e-a8e3-47f9bb1f3a2a.png)
+
+
 
