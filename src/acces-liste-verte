@@ -1,0 +1,4 @@
+cree_liste_verte
+echo '== Liste Verte =='
+cat listeVerte
+rm listeVerte
