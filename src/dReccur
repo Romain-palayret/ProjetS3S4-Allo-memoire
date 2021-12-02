@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# On récupère le temps de désinstallation défini dans serec.config
+var=$(sed -n '1p' /home/romain/Documents/ProjetS3/serec.config)
+temps=${var##* }
+
+# On affiche les noms de chaque paquet avec leur heure de dernier acces
+while read paquet
+do
+    echo $paquet
+    find /usr -name $paquet -printf "%AH:%AM %Aj %AY\n" > heureAcces
+
+    #On definie des variables devant contenir l'heure al plus recente;
+    heureRec=00
+    minuteRec=00
+    jourRec=001
+    anneeRec=02
+    #On convertit cette heure en seconde
+    secondeRec=$((($minuteRec*60)+($heureRec*3600)+($jourRec*86400)+($anneeRec*31536000)))
+
+    while read heure
+    do
+        #Trouver heure la plus recente
+        #On extrait les infos de la ligne
+        heureLigne=${heure:0:2}
+        minuteLigne=${heure:3:2}
+        jourLigne=${heure:6:3}
+        anneeLigne=${heure:12:2}
+
+        #On convertit tout ça en seconde
+        secondeLigne=$((($minuteLigne*60)+($heureLigne*3600)+($jourLigne*86400)+($anneeLigne*31536000)))
+
+        #On compare avec l'heure la plus recente
+        if [ $secondeRec -lt $secondeLigne  ]
+        then
+            secondeRec=$secondeLigne
+        fi
+
+    done < heureAcces
+    #TODO comparer l'heure la plus recente avec l heure courante et temps limite contenu dans serec.config
+    heureCourante=$(date +%k)
+    minuteCourante=$(date +%M)
+    jourCourant=$(date +%j)
+    anneeCourante=$(($(date +%Y)-2000))
+
+    secondeCourante=$((($minuteCourante*60)+($heureCourante*3600)+($jourCourant*86400)+($anneeCourante*31536000)))
+
+
+    if [ $(($secondeCourante-$temps)) -gt $secondeRec  ]
+    then
+        #desinstaller le paquet avec le programme de Loup
+        echo "On supprime : " $paquet
+    fi
+
+done < listeVerte
+rm heureAcces
+
+
+
