@@ -9,4 +9,6 @@ echo -e "command_not_found_handle() {\n    sudo $chemin/scriptInstallation \"\$1
 
 # On ajoute au PATH le chemin courant pour pouvoir executer 
 # les scripts n'importe ou dans le fichier
-echo  "export PATH=\"\$PATH:$(pwd)\"" >> /home/$nom/.bashrc
+var=$(sed -n '2p' /home/romain/Documents/ProjetS3/serec.config)
+cheminListe=${var##* }
+echo  "export PATH=\"\$PATH:$cheminListe\"" >> /home/$nom/.bashrc
