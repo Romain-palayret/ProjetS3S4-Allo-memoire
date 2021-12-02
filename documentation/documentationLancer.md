@@ -32,4 +32,6 @@ On ajoute ensuite a la fin du fichier /home/"nom de l'utilisateur"/.bashrc une l
 ![image](https://user-images.githubusercontent.com/81689403/144429286-7b3531a1-09ec-444e-a8e3-47f9bb1f3a2a.png)
 
 
-
+## Ligne pour l'accès aux listes
+![image d'accés aux listes](./Image/codeAccesListes.png)
+Avec cette ligne de code, le but est d'ajouter dans le fichier ***.bashrc*** une ligne qui ajoute à la variable d'environement PATH le chemin qui mène aux scripts d'accès aux listes pour pouvoir y accéder de n'importe où dans le répertoire
