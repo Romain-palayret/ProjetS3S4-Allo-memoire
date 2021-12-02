@@ -7,7 +7,7 @@ echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" | sudo tee -a /et
 
 echo -e "command_not_found_handle() {\n    sudo $chemin/scriptInstallation \"\$1\";\n    if [ -e /usr/bin/\"\$1\" ]\n    then\n        \"\$1\";\n    else\n        echo \"commande introuvable\";\n    fi\n    return 127;\n}" | sudo tee -a /etc/bash.bashrc
 
-# On ajoute au PATH le chemin courant pour pouvoir executer 
+# On ajoute au PATH le chemin où sont stocker les listes pour pouvoir executer 
 # les scripts n'importe ou dans le fichier
 var=$(sed -n '2p' /home/romain/Documents/ProjetS3/serec.config)
 cheminListe=${var##* }
