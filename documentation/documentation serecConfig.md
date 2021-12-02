@@ -11,4 +11,4 @@ Ce fichier contient :
 
 Cette liste sera amenée à évoluer dans le futur.
 
-![img](./Image/serecConfig.png)
+![alt text](./Image/serecConfig.png)
