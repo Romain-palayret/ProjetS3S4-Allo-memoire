@@ -63,7 +63,8 @@ effectuées par serecd, la localisation des listes, etc.
 et installations successives d'un même logiciel en environnement multi-utilisateurs ainsi que les éventuels dysfonctionnements 
 produits par les méta-paquets 
 - la mesure du gain apporté par l'application SeReC sur la masse logicielle d'un système. Plusieurs scénarios devront être 
-définis et testés (ex : système bureautique, système de développement logiciel) 
+définis et testés 
+(ex : système bureautique, système de développement logiciel) 
 - la fourniture de SeReC sous la forme d'un paquetage .deb 
 - la fourniture d'un manuel d'installation, de configuration et de déploiement de l'application dans lequel chaque opération 
 devra être décrite avec précision.  
