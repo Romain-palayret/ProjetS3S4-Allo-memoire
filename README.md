@@ -66,4 +66,4 @@ produits par les méta-paquets
 définis et testés (ex : système bureautique, système de développement logiciel) 
 - la fourniture de SeReC sous la forme d'un paquetage .deb 
 - la fourniture d'un manuel d'installation, de configuration et de déploiement de l'application dans lequel chaque opération 
-devra être décrite avec précision. 
+devra être décrite avec précision.  
