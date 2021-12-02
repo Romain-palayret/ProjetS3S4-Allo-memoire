@@ -50,7 +50,7 @@ interdits de désinstallation
 - D'un fichier de configuration serec.config permettant de fixer la période entre deux désinstallations automatiques effectuées par serecd, la localisation des listes, etc.
 
 
-**Les principaux travaux à réaliser sont les suivants : **
+**Les principaux travaux à réaliser sont les suivants :**
 - L'écriture d'un document récapitulant les différentes commandes de gestion des paquetages dans un système GNU/Linux Debian (apt, dpkg, etc.) munies de leurs principales options. Ce document devra également traiter la gestion des méta-paquets 
 - L'installation d'une distribution GNU/Linux Debian sous la forme d'une machine virtuelle gérée par Virtualbox 
 - L'écriture du code de l'utilitaire cree_liste_rouge 
