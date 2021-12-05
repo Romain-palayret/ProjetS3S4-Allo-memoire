@@ -38,10 +38,10 @@ On ajoute ensuite a la fin du fichier /home/"nom de l'utilisateur"/.bashrc une l
 Avec cette ligne de code, le but est d'ajouter dans le fichier ***.bashrc*** une ligne qui ajoute à la variable d'environement PATH le chemin qui mène aux scripts d'accès aux listes pour pouvoir y accéder de n'importe où dans le répertoire
 
 ### Gestion des erreurs
-Le programme lancer présenter ci dessus fonctionne parfaitement, s'il n'est lancé qu'une seule fois.
-En effet, s'il est lancé plusieurs fois d'affilé, il ecrit plusieurs la fonction _command_not_found_handle()_ plusieurs fois dans le fichier /etc/bash.bashrc.
-Ce problème est présent pour chacune des commandes rajoutée par le programme.
-Pour gerer ça, nous verifions avant d'ajouter les commandes si elles ne sont pas déjà présente.
+Le programme lancer présenté ci-dessus fonctionne parfaitement, s'il n'est lancé qu'une seule fois.
+En effet, s'il est lancé plusieurs fois d'affilées, il écrit la fonction _command_not_found_handle()_ plusieurs fois dans le fichier _/etc/bash.bashrc_.
+Ce problème est présent pour chacune des commandes rajoutées par le programme.
+Pour gerer ça, nous verifions avant d'ajouter les commandes si elles ne sont pas déjà présentes.
 
 Voici comment nous procedons pour la ligne rajoutée dans le fichier _/etc/sudoers_
 
