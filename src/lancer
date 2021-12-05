@@ -1,14 +1,63 @@
 #!/bin/bash
 
+#On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
 echo "Veuillez saisir l'utilisateur : "
 read nom
+#Le fichier lancer doit être executer dans son dossier, et pas en dehors
 chemin=$(pwd)
-echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" | sudo tee -a /etc/sudoers
 
+#On ecrit la fonction command_not_found_handle si elle n'existe pas déjà
+cat /etc/bash.bashrc > bashrc
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "command_not_found_handle() {" ]]
+    then
+        dejaEcrit=1
+    fi
+done < bashrc
+
+if [ $dejaEcrit -eq "0" ]
+then
 echo -e "command_not_found_handle() {\n    sudo $chemin/scriptInstallation \"\$1\";\n    if [ -e /usr/bin/\"\$1\" ]\n    then\n        \"\$1\";\n    else\n        echo \"commande introuvable\";\n    fi\n    return 127;\n}" | sudo tee -a /etc/bash.bashrc
+fi
+rm bashrc
 
-# On ajoute au PATH le chemin où sont stockées les listes pour pouvoir executer 
-# les scripts n'importe où dans la console
+#On ecrit la commande pour donner les droit d installation dans le fichier /etc/sudoers si elle n'existe pas déjà
+cat /etc/sudoers > sudoer
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" ]]
+    then
+        dejaEcrit=1
+    fi
+done < sudoer
+
+if [ $dejaEcrit -eq "0" ]
+then
+    echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" | sudo tee -a /etc/sudoers
+fi
+rm sudoer
+
+# On ajoute au PATH le chemin où sont stockée les listes pour pouvoir executées
+# les listes n'importe où dans la console
 var=$(sed -n '2p' /home/romain/Documents/ProjetS3/serec.config)
 cheminListe=${var##* }
-echo  "export PATH=\"\$PATH:$cheminListe\"" >> /home/$nom/.bashrc
+
+#On ajoute la ligne si elle n'est pas déjà ecrite
+cat /home/$nom/.bashrc > lebashrc
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "export PATH=\"\$PATH:$cheminListe\"" ]]
+    then
+        dejaEcrit=1
+    fi
+done < lebashrc
+
+if [ $dejaEcrit -eq "0" ]
+then
+    echo "export PATH=\"\$PATH:$cheminListe\"" >> /home/$nom/.bashrc
+fi
+rm lebashrc

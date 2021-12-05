@@ -4,10 +4,12 @@
 var=$(sed -n '1p' /home/romain/Documents/ProjetS3/serec.config)
 temps=${var##* }
 
+var=$(sed -n '4p' /home/romain/Documents/ProjetS3/serec.config)
+lechemin=${var##* }
+
 # On affiche les noms de chaque paquet avec leur heure de dernier acces
 while read paquet
 do
-    echo $paquet
     find /usr -name $paquet -printf "%AH:%AM %Aj %AY\n" > heureAcces
 
     #On definie des variables devant contenir l'heure al plus recente;
@@ -28,7 +30,7 @@ do
         anneeLigne=${heure:12:2}
 
         #On convertit tout ça en seconde
-        secondeLigne=$((($minuteLigne*60)+($heureLigne*3600)+($jourLigne*86400)+($anneeLigne*31536000)))
+        secondeLigne=$(((10#$minuteLigne*60)+(10#$heureLigne*3600)+(10#$jourLigne*86400)+(10#$anneeLigne*31536000)))
 
         #On compare avec l'heure la plus recente
         if [ $secondeRec -lt $secondeLigne  ]
@@ -43,13 +45,18 @@ do
     jourCourant=$(date +%j)
     anneeCourante=$(($(date +%Y)-2000))
 
-    secondeCourante=$((($minuteCourante*60)+($heureCourante*3600)+($jourCourant*86400)+($anneeCourante*31536000)))
+    secondeCourante=$(((10#$minuteCourante*60)+(10#$heureCourante*3600)+(10#$jourCourant*86400)+(10#$anneeCourante*31536000)))
 
 
     if [ $(($secondeCourante-$temps)) -gt $secondeRec  ]
     then
         #desinstaller le paquet avec le programme de Loup
-        echo "On supprime : " $paquet
+        
+        ./desinstallation/programmeC/exe $paquet $lechemin >/dev/null 2>&1
+        if [ $? -eq 0 ]
+        then
+            apt --purge -autoremove $paquet
+        fi
     fi
 
 done < listeVerte
