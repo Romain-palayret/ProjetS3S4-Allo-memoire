@@ -10,6 +10,7 @@ Ce programme modifie :
                        lorsque le paquet tapé dans la console n'est pas déjà installé.
 
 ## Description de la conception et réalisation du script
+
 Au debut du script, on demande à l'administrateur de saisir le nom de l'utilisateur a qui il veut installer le logiciel.
 Ce nom est nescessaire car on lui donnera les droits d'installation afin que le logiciel puisse installer des paquets sans demander le mot de passe administrateur a chaque fois. Il sera utilisé pour la modification du fichier _/etc/sudoers_.
 On récupère ensuite dans une variable _chemin_ le chemin du script _lancer_, car on suppose qu'il a le même chemin que le script _scriptInstallation_. En effet, connaître le chemin de _scriptInstallation_ est nescessaire car on appelera ce script dans la fonction _command\_not\_found\_handle()_.
@@ -32,6 +33,16 @@ On ajoute ensuite a la fin du fichier /home/"nom de l'utilisateur"/.bashrc une l
 ![image](https://user-images.githubusercontent.com/81689403/144429286-7b3531a1-09ec-444e-a8e3-47f9bb1f3a2a.png)
 
 
-## Ligne pour l'accès aux listes
+### Ligne pour l'accès aux listes
 ![image d'accés aux listes](./Image/codeAccesListes.png)
 Avec cette ligne de code, le but est d'ajouter dans le fichier ***.bashrc*** une ligne qui ajoute à la variable d'environement PATH le chemin qui mène aux scripts d'accès aux listes pour pouvoir y accéder de n'importe où dans le répertoire
+
+### Gestion des erreurs
+Le programme lancer présenter ci dessus fonctionne parfaitement, s'il n'est lancé qu'une seule fois.
+En effet, s'il est lancé plusieurs fois d'affilé, il ecrit plusieurs la fonction _command_not_found_handle()_ plusieurs fois dans le fichier /etc/bash.bashrc.
+Ce problème est présent pour chacune des commandes rajoutée par le programme.
+Pour gerer ça, nous verifions avant d'ajouter les commandes si elles ne sont pas déjà présente.
+
+Voici comment nous procedons pour la ligne rajoutée dans le fichier _/etc/sudoers_
+
+![alt text](./Image/GestionErreurLancer.png)
