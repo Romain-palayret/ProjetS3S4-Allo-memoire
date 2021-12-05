@@ -8,6 +8,7 @@ Ce fichier contient :
 - le temps en seconde au bout duquel un paquet doit être désinstallé.
 - le chemin absolu où seront stockées les listes Rouge, Orange et Verte
 - le chemin absolu ou sera stocké le log contenant l'historique des différentes installations et désinstallations causé par notre logiciel.
+- le chemin absolu du dossier de desinstallation
 
 Cette liste sera amenée à évoluer dans le futur.
 
