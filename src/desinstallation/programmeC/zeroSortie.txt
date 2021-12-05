@@ -1,0 +1,159 @@
+ PAQUET ENTRE zerofree 
+
+ AFFICHAGE LISTE ---------- 
+
+ 
+  element 0 : vaut image-factory
+ 
+ 
+  element 1 : vaut open-vm-tools
+ 
+ 
+  element 2 : vaut neurodebian-dev
+ 
+ 
+  element 3 : vaut libguestfs0
+ 
+ 
+  element 4 : vaut guestfsd
+ 
+ 
+  element 5 : vaut open-vm-tools-sdmp 
+ 
+ 
+  element 6 : vaut open-vm-tools-dev 
+ 
+ 
+  element 7 : vaut open-vm-tools-desktop 
+ 
+ 
+  element 8 : vaut nbdkit-plugin-guestfs 
+ 
+ 
+  element 9 : vaut ruby-guestfs 
+ 
+ 
+  element 10 : vaut python3-guestfs 
+ 
+ 
+  element 11 : vaut php-guestfs 
+ 
+ 
+  element 12 : vaut lua-guestfs 
+ 
+ 
+  element 13 : vaut libguestfs-zfs 
+ 
+ 
+  element 14 : vaut libguestfs-xfs 
+ 
+ 
+  element 15 : vaut libguestfs-java 
+ 
+ 
+  element 16 : vaut libguestfs-tools 
+ 
+ 
+  element 17 : vaut libguestfs-rsync 
+ 
+ 
+  element 18 : vaut libguestfs-rescue 
+ 
+ 
+  element 19 : vaut libguestfs-reiserfs 
+ 
+ 
+  element 20 : vaut libguestfs-perl 
+ 
+ 
+  element 21 : vaut libguestfs-ocaml-dev 
+ 
+ 
+  element 22 : vaut libguestfs-ocaml 
+ 
+ 
+  element 23 : vaut libguestfs-nilfs 
+ 
+ 
+  element 24 : vaut libguestfs-jfs 
+ 
+ 
+  element 25 : vaut libguestfs-hfsplus 
+ 
+ 
+  element 26 : vaut libguestfs-gobject-1.0-0 
+ 
+ 
+  element 27 : vaut libguestfs-gfs2 
+ 
+ 
+  element 28 : vaut libguestfs-dev 
+ 
+ 
+  element 29 : vaut diffoscope
+ 
+ 
+  element 30 : vaut oz
+ 
+ 
+  element 31 : vaut lava-dispatcher
+ 
+ 
+  element 32 : vaut lava-dev
+ 
+ 
+  element 33 : vaut reprotest 
+ 
+ 
+  element 34 : vaut forensics-extra
+ 
+ 
+  element 35 : vaut forensics-full
+ 
+ 
+  element 36 : vaut lava 
+ 
+ 
+  element 37 : vaut lava-server 
+ 
+ 
+  element 38 : vaut virt-p2v
+ 
+ 
+  element 39 : vaut vagrant-libvirt
+ 
+ 
+  element 40 : vaut lava-dispatcher 
+ 
+ 
+  element 41 : vaut libguestfs-tools
+ 
+ 
+  element 42 : vaut vagrant
+ 
+ 
+  element 43 : vaut vagrant-sshfs
+ 
+ 
+  element 44 : vaut vagrant-mutate
+ 
+ 
+  element 45 : vaut vagrant-lxc
+ 
+ 
+  element 46 : vaut python3-vagrant
+ 
+ 
+  element 47 : vaut fdroidserver
+ 
+ 
+  element 48 : vaut gir1.2-guestfs-1.0 
+ 
+ 
+  element 49 : vaut libguestfs-gobject-dev 
+ 
+ 
+  element 50 : vaut golang-guestfs-dev
+ 
+ FIN DE L AFFICHAGE DE LA LISTE ------------- 
+ 

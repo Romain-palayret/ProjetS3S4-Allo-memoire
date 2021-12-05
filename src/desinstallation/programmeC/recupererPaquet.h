@@ -3,26 +3,25 @@
 
 
 
-Paquet * testRetourPaquet( char *nom); 
+Paquet * testRetourPaquet( char *nom , char cheminProjet[] ); 
 
 
 void testChaineChar(char truc[]); 
 
 
-Paquet * creationPaquet( char  nom[] );
+Paquet * creationPaquet( char  nom[] , char cheminProjet[] );
 
-char *  copierValeurChaine( char chaineACopier[] , int tailleChaine); 
+char *  copierValeurChaine( char chaineACopier[] , int tailleChaine , char cheminProjet[]); 
 
-int dresserArborescencePaquet(Paquet *parent , char ***chaine , int *tailleListe); 
+int dresserArborescencePaquet(Paquet *parent , char ***chaine , int *tailleListe , char cheminProjet[]); 
 
-int  ajouterToutesLesRdependsDirectes(Paquet *parent);
+int  ajouterToutesLesRdependsDirectes(Paquet *parent , char cheminProjet[]);
 
-char * recupererPriorite(char nom[]);
+char * recupererPriorite(char nom[] , char cheminProjet[]);
 
-int cePaquetEstIlInstalle(char nom[]);
+int cePaquetEstIlInstalle(char nom[] , char cheminProjet[] );
 
 
-
-int dresserArborescenceFinale(Paquet *parent , char ***chaine , int *tailleListe); 
+int dresserArborescenceFinale(Paquet *parent , char ***chaine , int *tailleListe , char cheminProjet[]); 
 
 #endif 

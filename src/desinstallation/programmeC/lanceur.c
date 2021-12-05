@@ -4,6 +4,7 @@
 #include "manipulationPaquet.h" 
 #include "recupererPaquet.h" 
 
+/*
 void testAjout(){
 
     Paquet *parent = calloc(1 , sizeof(Paquet));  
@@ -121,7 +122,7 @@ void testDressageListeSuppression(){
     enfant11->nomPaquetCourant = "enfant11";
     enfant21->nomPaquetCourant = "enfant21"; 
     enfant22->nomPaquetCourant = "enfant22";  
-    */
+    
     ajouterPaquetReverse(parent , enfant1); 
     ajouterPaquetReverse(parent , enfant2);
     ajouterPaquetReverse(parent , enfant3);  
@@ -156,115 +157,32 @@ void testStrnCat(){
 }
 
 
-void testRetPaquet(){
+*/
 
-    Paquet *parent = testRetourPaquet("daron"); 
-    printf(" le nom du paquet parent : %s " , parent->nomPaquetCourant);
-    printf(" ses enfants sont %s et %s " , parent->reverseDep[0]->nomPaquetCourant , parent->reverseDep[1]->nomPaquetCourant);
-
-     
-}
-
-void testCreationArborescenceNiveau1(){
-
-    char chainePaquetParent[50] = "zerofree"; 
-   // Paquet *parent = ajouterToutesLesRdependsDirectes(chainePaquetParent); 
-
-    //afficherDependanceInversePaquet(parent); 
-
-}
-
-
-
-void testCreationPaquet(){
-
-    char *chaine = calloc(100 , sizeof(char)); 
-    Paquet **tabPointeur = calloc(2 , sizeof(void*)); 
-
-    tabPointeur[0] = creationPaquet( "bordel"); 
-    tabPointeur[1] = creationPaquet( "autre");  
-
-    for(int i = 0 ; i < 2 ; i++){
-        printf("\n les deux noms %s " , tabPointeur[i]->nomPaquetCourant); 
-    }
-}
-
-void testCopieValeurChaine(){
-
-
-   Paquet **listePaquet = calloc(2 , sizeof(void*)); 
-   listePaquet[0] = calloc(1 , sizeof(Paquet)); 
-   listePaquet[1] = calloc(1 , sizeof(Paquet));
-
-   char chaine[100] = "COMPRIS?" ;
-   listePaquet[0]->nomPaquetCourant =  copierValeurChaine(chaine , 100); 
-   strcpy(chaine , "trucmuche"); 
-   listePaquet[1]->nomPaquetCourant =  copierValeurChaine(chaine , 100); 
-   
-   printf(" truc %s autre %s " , listePaquet[0]->nomPaquetCourant , listePaquet[1]->nomPaquetCourant); 
-
-}
-
-
-void testRdepDirectes(){
-
-    Paquet *parent = creationPaquet("zerofree");          
-    ajouterToutesLesRdependsDirectes(parent);
-    afficherDependanceInversePaquet(parent); 
-}
-
-
-void testArborescence(char nomPaquet[]){
-
-    int tailleListe = 0; 
-    char **chaine = NULL; 
-    printf(" PAQUET ENTRE %s " , nomPaquet);  
-    Paquet *parent = creationPaquet(nomPaquet); 
-    dresserArborescencePaquet(parent , &chaine , &tailleListe);     
-    afficherTableauChar(chaine , tailleListe);
-}
-
-void testRecupererPriorite(char nom[]){
-
-   Paquet *paquet = creationPaquet(nom); 
-   paquet->Priorite =  recupererPriorite(nom); 
-   printf(" la priorite du paquet %s vaut %s " , paquet->nomPaquetCourant , paquet->Priorite); 
-
-}
-
-void testPaquetInstalleOuPas(char nom[]){
-
-    
-    int retour = cePaquetEstIlInstalle(nom); 
-    if(retour != 0){
-        printf(" ce paquet n est pas  installe  "); 
-    }else{
-        printf(" ce paquet est installe  %d " , retour); 
-    }
-
-
-}
-
-
-int  testArborescenceFinale(char nom[]){
+int  testArborescenceFinale(char nom[] , char * cheminProjet){
 
 
     int tailleListe = 0; 
     char **chaine = NULL;
     int retour = 0;
 
-    Paquet *parent = creationPaquet(nom); 
+    Paquet *parent = creationPaquet(nom , cheminProjet); 
     if(parent == NULL){
         printf(" CE PAQUET NE PEUT PAS ETRE SUPPRIME "); 
 	return -1; 
     }
-    retour = dresserArborescenceFinale(parent , &chaine , &tailleListe);    
+    retour = dresserArborescenceFinale(parent , &chaine , &tailleListe , cheminProjet);    
     if(retour == -1){
         return retour;
         printf("\n ---------------  FATAL ERROR ----------------  \n"); 	
     }else{
+	
+	afficherDependanceInversePaquet(parent); 
         afficherTableauChar(chaine , tailleListe);
+	
     }
+
+
     return 0; 
 }
 
@@ -295,5 +213,5 @@ int main(int argc , char **argv){
     //testRecupererPriorite(argv[1]);
     //testPaquetInstalleOuPas(argv[1]);  
 
-    return testArborescenceFinale(argv[1]); 
+    return testArborescenceFinale(argv[1] , argv[2]); 
 }

@@ -1,0 +1,5 @@
+image-factory
+open-vm-tools
+neurodebian-dev
+libguestfs0
+guestfsd
