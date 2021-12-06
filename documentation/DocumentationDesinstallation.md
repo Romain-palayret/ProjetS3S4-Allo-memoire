@@ -1,9 +1,3 @@
-
-# Loup Salomé 
-
-
-
-
 ## Introduction 
 
 Les logiciels et fonctionnalités sont installés sous forme de paquet dans un système linux. Ces paquets sont gérés par des gestionnaires de paquet (apt et dpkg) et ils sont interdépendants entre eux. Lorsque l'on souhaite désinstaller un paquet , il est donc nécessaire de vérifier si ce paquet n'est pas une dépendance d'un paquet important
@@ -99,25 +93,3 @@ que dresser l'arborescence est une classe récursive. Cette classe enveloppe est
 Cette fonction s'occupe de dresser l'arborescence des paquets de façon récursive. A chaque ajout de Paquet
 dans une structure en mémoire , on ajoute le nom du paquet dans la liste. Si le paquet figure 
 dans le tableaux de cahine de caractère , le paquet ne sera pas ajouté. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
