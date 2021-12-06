@@ -29,10 +29,45 @@ déjà dans la liste de Suppression , il ne sera pas ajouté.
 
 ![alt text](Image2/imageProgC/CréationPaquet.png) 
 
+
 La fonction création Paquet Fonctionne de la manière suivante. On passe en paramètre un nom de Paquet ainsi que le chemin Absolue du projet. On appelle 
 ensuite le scriptBash RecupererPriorite.sh , qui créera un fichier priorite.txt dans le dossier scriptBash. La fonction va ensuite récupérer la priorité 
 dans ce fichier texte. Si la priorité relevée est standard , required ou important. La fonction créerPaquet renverra null. Si cette fonction renvoit nulle , le programme
 appelant se mettra en erreur et renverra un code d'erreur. 
+
+
+## fonction RecupererPriorite 
+
+![alt text](Image2/imageProgC/RecupererPriorite.png) 
+
+Cette fonction s'occupe de récupérer la priorité pour la fonction création Paquet. 
+
+
+
+# FONCTION PRINCIPALE 
+
+## fonction Enveloppe Dressage Arborescence Paquet : 
+
+![alt text](Image2/imageProgC/FonctionEnveloppeDresserArborsescence.png) 
+
+Cette fonction sert de classe Enveloppe pour la fonction dressage de l'arborescence. Etant donné 
+que dresser l'arborescence est une classe récursive. Cette classe enveloppe est donc nécessaire 
+
+
+## fonction Dressage Arborescence Recursive 
+
+![alt text](Image2/imageProgC/dresserArborescencePaquet.png)
+
+Cette fonction s'occupe de dresser l'arborescence des paquets de façon récursive. A chaque ajout de Paquet
+dans une structure en mémoire , on ajoute le nom du paquet dans la liste. Si le paquet figure 
+dans le tableaux de cahine de caractère , le paquet ne sera pas ajouté. 
+
+
+
+
+
+
+
 
 
 
