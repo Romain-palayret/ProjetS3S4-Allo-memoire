@@ -1,6 +1,31 @@
 
 # Loup Salomé 
 
+
+
+
+## Presentation de l'algorithme de desinstallation 
+
+Les logiciels et fonctionnalités sont installés sous forme de paquet dans un système linux. Ces paquets sont gérés par des gestionnaires de paquet (apt et dpkg) et ils sont interdépendants entre eux. Lorsque l'on souhaite désinstaller un paquet , il est donc nécessaire de vérifier si ce paquet n'est pas une dépendance d'un paquet important
+dans le système debian. 
+
+## Les mentions Priority 
+
+Les développeurs de debian ont donc pensé à ajouter des mentions Priority aux paquets.  Il existe donc 5 types de priorités (du plus important au moins important) required
+important , standard , optionnal et enfin extra. On peut avoir accès à cette mention en tapant la commande apt show <nom du Paquet>. Il existe une commande  apt rdepends <paquetA>  qui permet d'obtenir la liste des paquets dépendants du paquet A. Là aussi les relations entre les dépendances ne sont pas équivalentes. 
+  
+## Les mentions de dépendance 
+  
+  Il existe plusieurs niveau d'intensite de dépendance entre les paquet sur le système débian. Les dépendances vitales des paquets sont les suivantes : 
+   
+    * Depends 
+    * Suggest 
+    * Provides
+  
+  
+ 
+
+
 ## Fonction affichage des Dependances Inverses du paquet 
 
 ![alt text](Image2/imageProgC/AfficherDependanceInversePaquet.png)
