@@ -18,7 +18,7 @@ important , standard , optionnal et enfin extra. On peut avoir accès à cette m
   
   Il existe plusieurs niveau d'intensite de dépendance entre les paquet sur le système débian. Les dépendances vitales des paquets sont les suivantes : 
  
-  -Mentions: 
+  1.Mentions: 
     - Depends 
     - Suggest 
     - Provides
