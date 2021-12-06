@@ -4,7 +4,7 @@
 
 
 
-## Presentation de l'algorithme de desinstallation 
+## Introduction 
 
 Les logiciels et fonctionnalités sont installés sous forme de paquet dans un système linux. Ces paquets sont gérés par des gestionnaires de paquet (apt et dpkg) et ils sont interdépendants entre eux. Lorsque l'on souhaite désinstaller un paquet , il est donc nécessaire de vérifier si ce paquet n'est pas une dépendance d'un paquet important
 dans le système debian. 
@@ -18,10 +18,24 @@ important , standard , optionnal et enfin extra. On peut avoir accès à cette m
   
   Il existe plusieurs niveau d'intensite de dépendance entre les paquet sur le système débian. Les dépendances vitales des paquets sont les suivantes : 
  
-  1.Mentions: 
-    - Depends 
-    - Suggest 
-    - Provides
+ 
+    * Depends : Le paquet B dépend du paquet A 
+    * Suggest : Le paquet B a besoin de A pour une utilisation normale 
+    * Provides : Quasi similaire à depends (nous n'avons pas bien saisie la différence avec depends) 
+  
+Il existe d'autres types de dépendance , mais ici , nous allons nous intéresser uniquemement à celle ci (car c'est ce type de dépendance qui peuvent mettre en cause l'intégrité du paquet B dépendant du paquet A). 
+  
+  
+## Presentation de l'algorithme de desinstallation 
+  
+L'algorithme de desinstallation sera donc le suivant : 
+  
+On appelle la commande apt rdepends <nom paquet A> on créer ensuite le paquet A dans une structure En C , et on lui ajoute toutes les rdepends suggest , provides
+et depends dans la liste. Une fois cela fait , on fait de même pour tout les paquets issus de A. Pour s'assurer d'avoir un arbre N aire en mémoire , on ajoutera le paquet à l'arborescence ET on ajoutera son nom à la liste de Suppression. Si l'on tombe sur un paquet déjà présent dans la liste de Suppression , l'algorithme ne l'ajoutera pas. Ce procédé permet de garantir que l'on aura un arbre N aire parfait. 
+  
+Une fois que l'arborescence en mémoire sera dressé , si durant la création de l'arborescence , l'algorithme a du créer un paquet required , important ou standard , le dressage de l'arborescence sera avorté et un code d'erreur sera renvoyé. Si l'arborescence a été complété , on supprime les paquets en commençant  depuis la fin de la liste de suppression.
+  
+# Presentation des fonctions permettant de manipuler et recuperer les paquets dans une arborescence 
   
   
 
