@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#On récupère le chemin de serec.config
+cheminSerec='/home/romain/Documents/ProjetS3/serec.config'
+
 #On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
 echo "Veuillez saisir l'utilisateur : "
 read nom
@@ -42,7 +45,7 @@ rm sudoer
 
 # On ajoute au PATH le chemin où sont stockée les listes pour pouvoir executées
 # les listes n'importe où dans la console
-var=$(sed -n '2p' /home/romain/Documents/ProjetS3/serec.config)
+var=$(sed -n '2p' $cheminSerec)
 cheminListe=${var##* }
 
 #On ajoute la ligne si elle n'est pas déjà ecrite
@@ -61,3 +64,36 @@ then
     echo "export PATH=\"\$PATH:$cheminListe\"" >> /home/$nom/.bashrc
 fi
 rm lebashrc
+
+# On récupère le nombre de seconde après la désinstallation
+var=$(sed -n '1p' $cheminSerec)
+secondeDes=${var##* }
+# On ajoute au PATH le chemin où est le script dReccur
+var=$(sed -n '5p' $cheminSerec)
+chemindReccur=${var##* }
+
+
+# On ajoute la ligne qui correspond au lancement du script dReccur toutes les X secondes
+cat /etc/crontab > crontabText
+
+nbLigne=0
+while read ligne
+do
+    ((nbLigne++))	
+    if [[ $ligne == *"..$chemindReccur/dReccur" ]]
+    then
+        sed -i.bak $nbLigne'd' /etc/crontab
+    fi
+done < crontabText
+
+echo "*/$(($secondeDes/60)) * * * * root bash ..$chemindReccur/dReccur" >> /etc/crontab
+
+
+rm crontabText
+
+
+
+
+
+
+
