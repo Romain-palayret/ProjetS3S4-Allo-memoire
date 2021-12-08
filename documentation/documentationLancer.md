@@ -39,7 +39,15 @@ Avec cette ligne de code, le but est d'ajouter dans le fichier ***.bashrc*** une
 
 ### Ajout de la ligne pour le lancement du script dReccur
 Pour lancer un script automatiquement après un certain nombre de seconde il faut utiliser le programme ***cron***. Cron est un programme qui permet aux utilisateurs des systèmes Unix d’exécuter automatiquement des scripts, des commandes ou des logiciels à une date et une heure spécifiée à l’avance, ou selon un cycle défini à l’avance.  
-Pour faire cela, nous allons préalablement mettre dans un fichier temporaire le contenu du fichier */etc/crontab* pour pouvoir le parcourir. Le but de le parcourir est de trouver si l'on a déjà ajouté la ligne dans le fichier
+Pour faire cela, nous allons préalablement mettre dans un fichier temporaire le contenu du fichier */etc/crontab* pour pouvoir le parcourir. Le but de le parcourir est de trouver si l'on a déjà ajouté une ligne contenant le chemin d'accés au script ***dReccur*** en faisant attention de ne pas prendre en compte la modification potentiel du temps modifié dans le fichier ***serec.config***. Ainsi si une ligne est trouvé on la supprime car elle a besoin d'ètre mise à jour avec la ligne de commande suivante
+![Image pour la commande sed](Image/sed.png)
+Commen paramètre de ce programme on y met le numéro de ligne précédement récupere lorsque l'on trouve la ligne. Avec l'option **-i.bak** on supprime définivement la ligne. Et pour finir on y ajoute le fichier dans lequel on veut supprimer la ligne.
+
+Par la suite on ajoute donc la ligne suivante peu importe si elle a été trouvé précédement.
+![image de la commande d'ajout dans le crontab](Image/ajoutLignePourDesinstall.png)
+Dans cette ligne de code, on récupère le nombre de seconde présiser dans le fichier ***serec.config*** que l'on divise par 60 pour obtenir des minutes. Ensuite nous optenons par exemple la ligne suivante :
+* */22 * * * * root bash monScript
+Cette ligne ce traduit par : Toutes les 10 minutes alors le script bash du nom de ***monScript*** sera executé. C'est exactement ce que nous voulons.
 
 ### Gestion des erreurs
 Le programme lancer présenté ci-dessus fonctionne parfaitement, s'il n'est lancé qu'une seule fois.
