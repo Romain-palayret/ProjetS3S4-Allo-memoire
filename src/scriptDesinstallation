@@ -1,0 +1,9 @@
+#!/bin/bash
+
+var=$(sed -n '3p' /home/romain/Documents/ProjetS3/serec.config)
+chemin=${var##* }
+Ladate=$(date)
+echo -e \\n$Ladate \\n >>$chemin/LogInstallation.log
+apt -y --purge autoremove $1 2>/dev/null >>$chemin/LogInstallation.log
+
+
