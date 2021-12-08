@@ -69,7 +69,7 @@ rm lebashrc
 var=$(sed -n '1p' $cheminSerec)
 secondeDes=${var##* }
 # On ajoute au PATH le chemin où est le script dReccur
-var=$(sed -n '5p' $cheminSerec)
+var=$(sed -n '4p' $cheminSerec)
 chemindReccur=${var##* }
 
 
