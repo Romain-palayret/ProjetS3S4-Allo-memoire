@@ -43,6 +43,24 @@ then
 fi
 rm sudoer
 
+#On ecrit la commande pour donner les droit de desinstallation dans le fichier /etc/sudoers si elle n'existe pas déjà
+cat /etc/sudoers > sudoer
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" ]]
+    then
+        dejaEcrit=1
+    fi
+done < sudoer
+
+if [ $dejaEcrit -eq "0" ]
+then
+    echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptDesinstallation" | sudo tee -a /etc/sudoers
+fi
+rm sudoer
+
+
 # On ajoute au PATH le chemin où sont stockée les listes pour pouvoir executées
 # les listes n'importe où dans la console
 var=$(sed -n '2p' $cheminSerec)
@@ -69,7 +87,7 @@ rm lebashrc
 var=$(sed -n '1p' $cheminSerec)
 secondeDes=${var##* }
 # On ajoute au PATH le chemin où est le script dReccur
-var=$(sed -n '4p' $cheminSerec)
+var=$(sed -n '5p' $cheminSerec)
 chemindReccur=${var##* }
 
 
@@ -90,10 +108,4 @@ echo "*/$(($secondeDes/60)) * * * * root bash ..$chemindReccur/dReccur" >> /etc/
 
 
 rm crontabText
-
-
-
-
-
-
 
