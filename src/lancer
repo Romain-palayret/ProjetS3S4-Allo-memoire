@@ -48,7 +48,7 @@ cat /etc/sudoers > sudoer
 dejaEcrit=0
 while read ligne
 do
-    if [[ $ligne == "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" ]]
+    if [[ $ligne == "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptDesinstallation" ]]
     then
         dejaEcrit=1
     fi
