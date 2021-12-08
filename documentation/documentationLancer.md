@@ -47,7 +47,7 @@ Par la suite on ajoute donc la ligne suivante peu importe si elle a été trouv�
 ![image de la commande d'ajout dans le crontab](Image/ajoutLignePourDesinstall.png)
 Dans cette ligne de code, on récupère le nombre de seconde présiser dans le fichier ***serec.config*** que l'on divise par 60 pour obtenir des minutes. Ensuite nous optenons par exemple la ligne suivante :  
 `*/22 * * * * root bash monScript`  
-Cette ligne ce traduit par : Toutes les 10 minutes alors le script bash du nom de ***monScript*** sera executé. C'est exactement ce que nous voulons.
+Cette ligne ce traduit par : Toutes les 10 minutes alors le script bash du nom de ***monScript*** sera executé. C'est exactement ce que nous voulons. Juste après cette ligne est ajoutée au fichier */etc/crontab*.
 
 ### Gestion des erreurs
 Le programme lancer présenté ci-dessus fonctionne parfaitement, s'il n'est lancé qu'une seule fois.
