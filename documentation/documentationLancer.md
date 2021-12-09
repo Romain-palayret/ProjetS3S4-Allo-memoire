@@ -16,7 +16,14 @@ Le script _lancer_ a été codé sur l'editeur texte _nano_ et testé sur l'envi
 
 ## Description de la conception et réalisation du script
 
-Au debut du script, on demande à l'administrateur de saisir le nom de l'utilisateur a qui il veut installer le logiciel.
+Au début du script, on récupère le chemin du fichier _serec.config_. Ce chemin est pour le moment inscrit en dur dans le programme, et doit donc être modifié par l'intégrateur lors de l'installation de serec.config. Ce fichier contient diverse informations nescessaires au fonctionnement du script _lancer_, et doit donc être complet avant son execution.
+
+```
+#On récupère le chemin de serec.config
+cheminSerec='/home/romain/Documents/ProjetS3/serec.config'
+```
+
+On demande ensuite à l'administrateur de saisir le nom de l'utilisateur a qui il veut installer le logiciel.
 Ce nom est nescessaire car on lui donnera les droits d'installation afin que le logiciel puisse installer des paquets sans demander le mot de passe administrateur a chaque fois. Il sera utilisé pour la modification du fichier _/etc/sudoers_.
 On récupère ensuite dans une variable _chemin_ le chemin du script _lancer_, car on suppose qu'il a le même chemin que le script _scriptInstallation_. En effet, connaître le chemin de _scriptInstallation_ est nescessaire car on appelera ce script dans la fonction _command\_not\_found\_handle()_.
 
@@ -62,7 +69,7 @@ rm bashrc
 On écrit ensuite dans le fichier /etc/sudoers la ligne suivante. Elle donnera à l'utilisateur dont le nom a été saisi plus tôt les droits d'installation de paquet.
 ```echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" | sudo tee -a /etc/sudoers```
 
-Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La ligne de code ci-dessus était écrite plusieurs fois. Ecrire cette ligne une seconde fois peut-être nescessaire si le nom d'utilisateur est différent, mais si le nom d'utilisateur est le même cette réécriture n'est pas souhaitée. Pour regler ce problème, nous allons ecrire le contenu de _/etc/bash.bashrc_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ci-dessus est déjà écrite. Si c'est le cas, la fonction ne sera pas réécrite.
+Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La ligne de code ci-dessus était écrite plusieurs fois. Ecrire cette ligne une seconde fois peut-être nescessaire si le nom d'utilisateur est différent, mais si le nom d'utilisateur est le même cette réécriture n'est pas souhaitée. Pour regler ce problème, nous allons ecrire le contenu de _/etc/sudoers_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ci-dessus est déjà écrite. Si c'est le cas, la ligne ne sera pas réécrite.
 
 ```
 #On ecrit la commande pour donner les droit d installation dans le fichier /etc/sudoers si elle n'existe pas déjà
@@ -89,7 +96,7 @@ rm sudoer
 On écrit ensuite dans le fichier /etc/sudoers la ligne suivante. Elle donnera à l'utilisateur dont le nom a été saisi plus tôt les droits d'installation de paquet.
 ```echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptDesinstallation" | sudo tee -a /etc/sudoers```
 
-Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La ligne de code ci-dessus était écrite plusieurs fois. Ecrire cette ligne une seconde fois peut-être nescessaire si le nom d'utilisateur est différent, mais si le nom d'utilisateur est le même cette réécriture n'est pas souhaitée. Pour regler ce problème, nous allons ecrire le contenu de _/etc/bash.bashrc_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ci-dessus est déjà écrite. Si c'est le cas, la fonction ne sera pas réécrite.
+Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La ligne de code ci-dessus était écrite plusieurs fois. Ecrire cette ligne une seconde fois peut-être nescessaire si le nom d'utilisateur est différent, mais si le nom d'utilisateur est le même cette réécriture n'est pas souhaitée. Pour regler ce problème, nous allons ecrire le contenu de _/etc/sudoers_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ci-dessus est déjà écrite. Si c'est le cas, la ligne ne sera pas réécrite.
 
 ```
 #On ecrit la commande pour donner les droit de desinstallation dans le fichier /etc/sudoers si elle n'existe pas déjà
@@ -110,45 +117,80 @@ fi
 rm sudoer
 
 ```
+### Ajout au PATH du chemin des listes :
 
-On écrit ensuite dans le fichier /etc/sudoers la ligne suivante. Elle donnera à l'utilisateur dont le nom a été saisi plus tôt les droits de Desinstallation de paquet.
+On commence extraire du fichier serec.config le chemin des listes rouge, verte et orange.
+```
+var=$(sed -n '2p' $cheminSerec)
+cheminListe=${var##* }
+```
+On ajoute ensuite à la fin du fichier /home/$nom/.bashrc la ligne de code ```export PATH=\"\$PATH:$cheminListe\"``` . Cette ligne permet d'executer les commandes permettant d'acceder aux listes depuis n'importe quel endroit de la console.
 
-![alt text](./Image/scriptDesinstallation.png)
+```echo "export PATH=\"\$PATH:$cheminListe\"" >> /home/$nom/.bashrc```
 
-On écrit ensuite dans le fichier /etc/bash.bashrc la fonction suivante. Elle sera appellée lorsqu'une commande introuvable est inscrite dans la console. Elle essayera d'installer la un paquet qui a pour nom la commande introuvable en question. Si aucun paquet ne correspond au nom indiqué, alors elle marque sur la console _commande introuvable_. Mais si le paquet existe, alors elle l'installera et l'ouvrira automatiquement dès la fin de l'installation.
+Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La ligne de code ci-dessus était écrite plusieurs fois. Ecrire cette ligne une seconde fois peut-être nescessaire si le nom d'utilisateur est différent (car le fichier d'écriture est différent), mais si le nom d'utilisateur est le même cette réécriture n'est pas souhaitée car elle conduit à des comportements imprévisibles. Pour regler ce problème, nous allons ecrire le contenu de _/home/$nom/.bashrc_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ci-dessus est déjà écrite. Si c'est le cas, la ligne ne sera pas réécrite.
 
-![alt text](./Image/Capture_command_not_found_handle.png)
+```
+# On ajoute au PATH le chemin où sont stockée les listes pour pouvoir executées
+# les listes n'importe où dans la console
+var=$(sed -n '2p' $cheminSerec)
+cheminListe=${var##* }
+
+#On ajoute la ligne si elle n'est pas déjà ecrite
+cat /home/$nom/.bashrc > lebashrc
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "export PATH=\"\$PATH:$cheminListe\"" ]]
+    then
+        dejaEcrit=1
+    fi
+done < lebashrc
+
+if [ $dejaEcrit -eq "0" ]
+then
+    echo "export PATH=\"\$PATH:$cheminListe\"" >> /home/$nom/.bashrc
+fi
+rm lebashrc
+```
+### Ajout au _crontab_ de l'execution du script dReccur :
+
+On commence extraire du fichier serec.config le nombre de secondes avant lesquelles un paquet non utilisé doit être désinstallé.
+Lorsque l'intégrateur modifie le fichier _serec.config_, on recommande à l'intégrateur de saisir un nombre de secondes supérieur à 7200, car le programme de désinstallation _dReccur_ est assez long, et ce chiffre assez élevé permet de ne pas executer le programme _dReccur_ avant que la précédente execution soit terminée.
 
 
-On lit ensuite dans le fichier serec.config ( dont le chemin est ecrit pour le moment en dur dans le programme, mais ce sera problème disparaitra tout seul quand on incluera le serveur serecd) le chemin des listes rouge, verte et orange. Ce chemin est écrit part l'administrateur lors de l'installation du paquet.
+```
+# On récupère le nombre de seconde après la désinstallation
+var=$(sed -n '1p' $cheminSerec)
+secondeDes=${var##* }
+# On ajoute dans une variable le chemin où est le script dReccur
+var=$(sed -n '5p' $cheminSerec)
+chemindReccur=${var##* }
+```
 
-On ajoute ensuite a la fin du fichier /home/"nom de l'utilisateur"/.bashrc une ligne permettant d'executer les commandes permettant d'acceder aux listes depuis n'importe quel endroit de la console.
+On ajoute ensuite à la fin du fichier /etc/crontab la ligne de code ```*/$(($secondeDes/60)) * * * * root bash ..$chemindReccur/dReccur``` . Cette ligne permet d'executer toutes les _$secondesDes_ (variable qui contient les secondes extraites précédemment dans le fichier _serec.config_) le script _dReccur_ qui gere la désinstallation des paquets.
 
-![image](https://user-images.githubusercontent.com/81689403/144429286-7b3531a1-09ec-444e-a8e3-47f9bb1f3a2a.png)
+```echo "*/$(($secondeDes/60)) * * * * root bash ..$chemindReccur/dReccur" >> /etc/crontab```
+
+Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) la ligne de code ci-dessus était écrite plusieurs fois. Cela pose problème car si la ligne est écrite 2 fois, le script _dReccur_ sera executer 2 fois simultanement.  Pour regler ce problème, nous allons ecrire le contenu de _/etc/crontab_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ci-dessus est déjà écrite. Si c'est le cas, la ligne ne sera pas réécrite.
+
+```
+# On ajoute la ligne qui correspond au lancement du script dReccur toutes les X secondes
+cat /etc/crontab > crontabText
+
+nbLigne=0
+while read ligne
+do
+    ((nbLigne++))	
+    if [[ $ligne == *"..$chemindReccur/dReccur" ]]
+    then
+        sed -i.bak $nbLigne'd' /etc/crontab
+    fi
+done < crontabText
+
+echo "*/$(($secondeDes/60)) * * * * root bash ..$chemindReccur/dReccur" >> /etc/crontab
 
 
-### Ligne pour l'accès aux listes
-![image d'accés aux listes](./Image/codeAccesListes.png)
-Avec cette ligne de code, le but est d'ajouter dans le fichier ***.bashrc*** une ligne qui ajoute à la variable d'environement PATH le chemin qui mène aux scripts d'accès aux listes pour pouvoir y accéder de n'importe où dans le répertoire
+rm crontabText
+```
 
-### Ajout de la ligne pour le lancement du script dReccur
-Pour lancer un script automatiquement après un certain nombre de seconde il faut utiliser le programme ***cron***. Cron est un programme qui permet aux utilisateurs des systèmes Unix d’exécuter automatiquement des scripts, des commandes ou des logiciels à une date et une heure spécifiée à l’avance, ou selon un cycle défini à l’avance.  
-Pour faire cela, nous allons préalablement mettre dans un fichier temporaire le contenu du fichier */etc/crontab* pour pouvoir le parcourir. Le but de le parcourir est de trouver si l'on a déjà ajouté une ligne contenant le chemin d'accés au script ***dReccur*** en faisant attention de ne pas prendre en compte la modification potentiel du temps modifié dans le fichier ***serec.config***. Ainsi si une ligne est trouvé on la supprime car elle a besoin d'ètre mise à jour avec la ligne de commande suivante
-![Image pour la commande sed](Image/sed.png)
-Comme paramètre de ce programme on y met le numéro de ligne précédement récupere lorsque l'on trouve la ligne. Avec l'option **-i.bak** on supprime définivement la ligne. Et pour finir on y ajoute le fichier dans lequel on veut supprimer la ligne.
-
-Par la suite on ajoute donc la ligne suivante peu importe si elle a été trouvé précédement.
-![image de la commande d'ajout dans le crontab](Image/ajoutLignePourDesinstall.png)
-Dans cette ligne de code, on récupère le nombre de seconde présiser dans le fichier ***serec.config*** que l'on divise par 60 pour obtenir des minutes. Ensuite nous optenons par exemple la ligne suivante :  
-`*/22 * * * * root bash monScript`  
-Cette ligne ce traduit par : Toutes les 10 minutes alors le script bash du nom de ***monScript*** sera executé. C'est exactement ce que nous voulons. Juste après cette ligne est ajoutée au fichier */etc/crontab*.
-
-### Gestion des erreurs
-Le programme lancer présenté ci-dessus fonctionne parfaitement, s'il n'est lancé qu'une seule fois.
-En effet, s'il est lancé plusieurs fois d'affilées, il écrit la fonction _command_not_found_handle()_ plusieurs fois dans le fichier _/etc/bash.bashrc_.
-Ce problème est présent pour chacune des commandes rajoutées par le programme.
-Pour gerer ça, nous verifions avant d'ajouter les commandes si elles ne sont pas déjà présentes.
-
-Voici comment nous procedons pour la ligne rajoutée dans le fichier _/etc/sudoers_
-
-![alt text](./Image/GestionErreurLancer.png)
