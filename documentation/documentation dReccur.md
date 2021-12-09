@@ -82,4 +82,15 @@ Dans une boucle while qui parcourt le fichier temporaire, on recherche l'heure l
 Une fois qu'on a trouvé l'heure la plus recente, on la compare avec l'heure courante (elle aussi convertit en seconde) auquel on soustrait le temps contenu dans le fichier _serec.config_.
 Si le paquet n'a pas été utilisé depuis longtemps, on appelle la fonction de desinstallation qui se chargera de désinstaller le paquet et mettre à jour le log.
 
-![image](./Image/comparaisonHeure_serecConfig.png)
+```
+    if [ $(($secondeCourante-$temps)) -gt $secondeRec  ]
+    then
+        #desinstaller le paquet avec le programme de Loup
+        
+        $lechemin/programmeC/exe $paquet $lechemin/desinstallation >/dev/null 2>&1
+        if [ $? -eq 0 ]
+        then
+            sudo $lechemin/scriptDesinstallation $paquet
+        fi
+    fi
+```
