@@ -9,7 +9,25 @@ On commence par récupérer dans le fichier _serec.config_ le temps en seconde a
 Ce temps est le dernier nombre de la première ligne du fichier _serec.config_.
 On le stock dans une variable _temps_.
 
-![alt text](./Image/variable_temps_serec.png) 
+```
+# On récupère le temps de désinstallation défini dans serec.config
+var=$(sed -n '1p' $cheminSerec)
+temps=${var##* }
+```
+
+On extrait ensuite du fichier _serec.config_ le chemin du paquet. Ce chemin est nescessaire pour appeller les autres script du paquet.
+
+```
+var=$(sed -n '4p' $cheminSerec)
+lechemin=${var##* }
+```
+
+On extrait ensuite du fichier _serec.config_ le chemin des listes. Ce chemin est nescessaire pour pouvoir lire la liste verte et savoir quel paquet on peut désinstaller sans risque.
+
+```
+var=$(sed -n '2p' $cheminSerec)
+cheminListe=${var##* }
+```
 
 Dans le fichier listeVerte sont stocké les noms des paquets qui ne sont pas nescessaire au fonctionnement de la machine Debian.
 Chaque ligne de ce fichier est un nom de paquet.
@@ -29,6 +47,6 @@ Dans une boucle while qui parcourt le fichier temporaire, on recherche l'heure l
 ![alt text](./Image/boucleWhile_serecConfig.png)
 
 Une fois qu'on a trouvé l'heure la plus recente, on la compare avec l'heure courante (elle aussi convertit en seconde) auquel on soustrait le temps contenu dans le fichier _serec.config_.
-Si le paquet n'a pas été utilisé depuis longtemps, on appelle la fonction de desinstallation.
+Si le paquet n'a pas été utilisé depuis longtemps, on appelle la fonction de desinstallation qui se chargera de désinstaller le paquet et mettre à jour le log.
 
 ![image](./Image/comparaisonHeure_serecConfig.png)
