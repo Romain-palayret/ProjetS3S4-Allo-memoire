@@ -17,6 +17,9 @@ Date de rendu de la première version du projet : 10 décembre 2021
 # Lien du Zenhub
 https://app.zenhub.com/workspaces/projets3s4-allomemoire-618f968ffd4c76001d589e5f/board?invite=true
 
+# Lien du Drive du projet
+https://drive.google.com/drive/u/1/folders/1nX_SPK4MsgyY80KgHu5D8EUfmKix28n4
+
 # Description générale du projet 
 
    Aujourd'hui à force d'évoluer les systèmes d'exploitation accumulent des utilitaires inutilisés qui surchargent et ralentissent les systèmes d'exploitation. De plus, ces utilitaires prennent de l'espace de stockage qui pourrait être utilisé d'une meilleure manière. Le but de notre projet est donc **d'alléger** un système d'exploitation de type GNU/Linux Debian.  
