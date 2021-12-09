@@ -12,9 +12,9 @@ Ce fichier contient :
 
 Cette liste sera amenée à évoluer dans le futur.
 
-'''
+```
 temps de desinstallation : 2400
 emplacement des listes : /home/romain/Documents/ProjetS3
 emplacement du Log : /home/romain/Documents/ProjetS3
 emplacement de Serec : /home/romain/Documents/ProjetS3
-'''
+```
