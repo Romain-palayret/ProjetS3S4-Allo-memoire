@@ -57,7 +57,27 @@ Pour ce faire, on sépare dans des variables l'heure, les minutes, les jours dep
 
 Dans une boucle while qui parcourt le fichier temporaire, on recherche l'heure la plus recente.
 
-![alt text](./Image/boucleWhile_serecConfig.png)
+```
+    while read heure
+    do
+        #Trouver heure la plus recente
+        #On extrait les infos de la ligne
+        heureLigne=${heure:0:2}
+        minuteLigne=${heure:3:2}
+        jourLigne=${heure:6:3}
+        anneeLigne=${heure:12:2}
+
+        #On convertit tout ça en seconde
+        secondeLigne=$(((10#$minuteLigne*60)+(10#$heureLigne*3600)+(10#$jourLigne*86400)+(10#$anneeLigne*31536000)))
+
+        #On compare avec l'heure la plus recente
+        if [ $secondeRec -lt $secondeLigne  ]
+        then
+            secondeRec=$secondeLigne
+        fi
+
+    done < heureAcces
+```
 
 Une fois qu'on a trouvé l'heure la plus recente, on la compare avec l'heure courante (elle aussi convertit en seconde) auquel on soustrait le temps contenu dans le fichier _serec.config_.
 Si le paquet n'a pas été utilisé depuis longtemps, on appelle la fonction de desinstallation qui se chargera de désinstaller le paquet et mettre à jour le log.
