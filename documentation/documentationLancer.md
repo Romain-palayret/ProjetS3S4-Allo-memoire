@@ -29,14 +29,14 @@ chemin=$(pwd)
 ```
 La suite du programme est découpée en 5 partie. Ces parties correspondent à chaque modifications de fichier qu'effectue le script _lancer_ et donc à chaque fonctionnalités que ces modifications permettent.
 
-### Droits d'installations des paquets :
+### Command _command\_not\_found\_handle()_ :
 
 Le morceau de code suivant permet d'ecrire la fonction _command\_not\_found\_handle()_ dans le fichier /etc/bash.bashrc. Cette fonction sera appellée lorsqu'une commande introuvable est inscrite dans la console. Elle essayera d'installer la un paquet qui a pour nom la commande introuvable en question. Si aucun paquet ne correspond au nom indiqué, alors elle marque sur la console _commande introuvable_. Mais si le paquet existe, alors elle l'installera et l'ouvrira automatiquement dès la fin de l'installation.
 
 ```
 echo -e "command_not_found_handle() {\n    sudo $chemin/scriptInstallation \"\$1\";\n    if [ -e /usr/bin/\"\$1\" ]\n    then\n        \"\$1\";\n    else\n        echo \"commande introuvable\";\n    fi\n    return 127;\n}" | sudo tee -a /etc/bash.bashrc
 ```
-Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executer plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La fonction _command\_not\_found\_handle()_ était écrite plusieurs fois. Si cette fonction est écrite plusieurs fois, alors elle n'est plus appelée par le système. Pour regler ce problème, nous allons ecrire le contenu de _/etc/bash.bashrc_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ```command_not_found_handle() {``` est déjà écrite. Si c'est le cas, la fonction ne sera pas réécrite.
+Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La fonction _command\_not\_found\_handle()_ était écrite plusieurs fois. Si cette fonction est écrite plusieurs fois, alors elle n'est plus appelée par le système. Pour regler ce problème, nous allons ecrire le contenu de _/etc/bash.bashrc_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ```command_not_found_handle() {``` est déjà écrite. Si c'est le cas, la fonction ne sera pas réécrite.
 
 ```
 #On ecrit la fonction command_not_found_handle si elle n'existe pas déjà
@@ -56,7 +56,60 @@ echo -e "command_not_found_handle() {\n    sudo $chemin/scriptInstallation \"\$1
 fi
 rm bashrc
 ```
+
+### Droits d'installations des paquets :
+
 On écrit ensuite dans le fichier /etc/sudoers la ligne suivante. Elle donnera à l'utilisateur dont le nom a été saisi plus tôt les droits d'installation de paquet.
+```echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" | sudo tee -a /etc/sudoers```
+
+Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La ligne de code ci-dessus était écrite plusieurs fois. Ecrire cette ligne une seconde fois peut-être nescessaire si le nom d'utilisateur est différent, mais si le nom d'utilisateur est le même cette réécriture n'est pas souhaitée. Pour regler ce problème, nous allons ecrire le contenu de _/etc/bash.bashrc_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ci-dessus est déjà écrite. Si c'est le cas, la fonction ne sera pas réécrite.
+
+```
+#On ecrit la commande pour donner les droit d installation dans le fichier /etc/sudoers si elle n'existe pas déjà
+cat /etc/sudoers > sudoer
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" ]]
+    then
+        dejaEcrit=1
+    fi
+done < sudoer
+
+if [ $dejaEcrit -eq "0" ]
+then
+    echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptInstallation" | sudo tee -a /etc/sudoers
+fi
+rm sudoer
+
+```
+
+### Droits de désinstallation des paquets :
+
+On écrit ensuite dans le fichier /etc/sudoers la ligne suivante. Elle donnera à l'utilisateur dont le nom a été saisi plus tôt les droits d'installation de paquet.
+```echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptDesinstallation" | sudo tee -a /etc/sudoers```
+
+Au cours du projet, nous nous sommes rendu compte que cette simple commande était insuffisante. En effet, si le script _lancer_ était executé plusieurs fois (pour définir plusieurs utilisateurs par exemple, ou par simple erreur humaine) La ligne de code ci-dessus était écrite plusieurs fois. Ecrire cette ligne une seconde fois peut-être nescessaire si le nom d'utilisateur est différent, mais si le nom d'utilisateur est le même cette réécriture n'est pas souhaitée. Pour regler ce problème, nous allons ecrire le contenu de _/etc/bash.bashrc_ dans un fichier temporaire, afin de le parcourir plus facilement. On vérifie ensuite si la ligne de code ci-dessus est déjà écrite. Si c'est le cas, la fonction ne sera pas réécrite.
+
+```
+#On ecrit la commande pour donner les droit de desinstallation dans le fichier /etc/sudoers si elle n'existe pas déjà
+cat /etc/sudoers > sudoer
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptDesinstallation" ]]
+    then
+        dejaEcrit=1
+    fi
+done < sudoer
+
+if [ $dejaEcrit -eq "0" ]
+then
+    echo "$nom ALL=(ALL:ALL) NOPASSWD: $chemin/scriptDesinstallation" | sudo tee -a /etc/sudoers
+fi
+rm sudoer
+
+```
 
 On écrit ensuite dans le fichier /etc/sudoers la ligne suivante. Elle donnera à l'utilisateur dont le nom a été saisi plus tôt les droits de Desinstallation de paquet.
 
