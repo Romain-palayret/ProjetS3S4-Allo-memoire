@@ -44,7 +44,16 @@ do
 Une fois que cette liste d'heure est récupérée dans le fichier, on essaie de trouver l'heure la plus recente. On est parti du principe que si au moins un de ces fichiers à été utilisé recemment, alors le paquet en question ne doit pas être supprimé.
 Pour ce faire, on sépare dans des variables l'heure, les minutes, les jours depuis le début de l'année et l'année en cours. Puis on convertit tout en seconde.
 
-![alt text](./Image/extractionHeureLigne_serecConfig.png)
+```
+        #On extrait les infos de la ligne
+        heureLigne=${heure:0:2}
+        minuteLigne=${heure:3:2}
+        jourLigne=${heure:6:3}
+        anneeLigne=${heure:12:2}
+
+        #On convertit tout ça en seconde
+        secondeLigne=$(((10#$minuteLigne*60)+(10#$heureLigne*3600)+(10#$jourLigne*86400)+(10#$anneeLigne*31536000)))
+```
 
 Dans une boucle while qui parcourt le fichier temporaire, on recherche l'heure la plus recente.
 
