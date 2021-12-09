@@ -5,10 +5,10 @@
 Projet durant le semestre S3 et S4 en collaboration avec l'IUT de Rodez.  
 Ce projet permet l'allocution dynamique de la masse logiciel d'un système GNU/Linux  
 # Auteur :
-**PALAYRET** Romain : Scrum Master
-**DEPRECQ** Corentin : Equipe de développement
-**HELG** Guillaume : Product Owner
-**SALOME** Loup : Equipe de développement 
+**PALAYRET** Romain : Scrum Master   
+**DEPRECQ** Corentin : Equipe de développement   
+**HELG** Guillaume : Product Owner   
+**SALOME** Loup : Equipe de développement   
 
 # Dates clés
 Date de début de projet                        : 12 octobre 2021  
