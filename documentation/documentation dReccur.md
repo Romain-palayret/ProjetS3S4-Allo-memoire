@@ -33,7 +33,11 @@ Dans le fichier listeVerte sont stocké les noms des paquets qui ne sont pas nes
 Chaque ligne de ce fichier est un nom de paquet.
 On parcourt donc ce fichier dans une boucle while et, avec la commande find, on stock dans un fichier temporaire _heureAcces_ l'ensemble des dernières heures d'acces de chaque fichier de _usr_ se terminant par le nom du paquet en question.
 
-![alt text](./Image/stockageHeure_serecConfig.png)
+```
+while read paquet
+do
+    find /usr -name $paquet -printf "%AH:%AM %Aj %AY\n" > heureAcces
+```
 
 ![alt text](./Image/contenuHeureAcces_serecConfig.png) voici le contenu du fichier temporaire _heureAcces_ la commande find pour le paquet _gimp_.
 
