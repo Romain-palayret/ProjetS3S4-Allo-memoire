@@ -5,9 +5,14 @@ Le programme _lancer_ est un script bash s'occupant de l'installation du logicie
 Lancé par l'administrateur, il permet d'integrer le logiciel à la machine Debian.
 
 Ce programme modifie :
-- /etc/sudoers         En ajoutant les droits d'installation de paquet à un utilisateur donné.
+- /etc/sudoers         En ajoutant les droits d'installation et de désinstallation de paquet à un utilisateur donné.
 - /etc/bash.bashrc     En ajoutant la fonction _command\_not\_found\_handle()_ qui appelera le script bash _scriptInstallation_ pour installer un paquet
                        lorsque le paquet tapé dans la console n'est pas déjà installé.
+- /home/$nom/.bashrc   En ajoutant au PATH le chemin où sont stockée les listes pour pouvoir executées les listes n'importe où dans la console
+- /etc/crontab         En ajoutant les lignes pour executer regulierment le programme de desinstallation
+
+## Outils utilisés : 
+Le script _lancer_ a été codé sur l'editeur texte _nano_ et testé sur l'environnement Debian
 
 ## Description de la conception et réalisation du script
 
