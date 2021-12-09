@@ -62,7 +62,6 @@ do
         if [ $? -eq 0 ]
         then
             sudo $lechemin/scriptDesinstallation $paquet
-            sleep 10000
         fi
     fi
 
