@@ -8,8 +8,13 @@ Ce fichier contient :
 - le temps en seconde au bout duquel un paquet doit être désinstallé.
 - le chemin absolu où seront stockées les listes Rouge, Orange et Verte
 - le chemin absolu ou sera stocké le log contenant l'historique des différentes installations et désinstallations causé par notre logiciel.
-- le chemin absolu du dossier de desinstallation
+- le chemin absolu de l'application
 
 Cette liste sera amenée à évoluer dans le futur.
 
-![alt text](./Image/serecConfig.png)
+'''
+temps de desinstallation : 2400
+emplacement des listes : /home/romain/Documents/ProjetS3
+emplacement du Log : /home/romain/Documents/ProjetS3
+emplacement de Serec : /home/romain/Documents/ProjetS3
+'''
