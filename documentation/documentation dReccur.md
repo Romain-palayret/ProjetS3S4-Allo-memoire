@@ -41,26 +41,26 @@ do
 
 ![alt text](./Image/contenuHeureAcces_serecConfig.png) voici le contenu du fichier temporaire _heureAcces_ la commande find pour le paquet _gimp_.
 
-Une fois que cette liste d'heure est récupérée dans le fichier, on essaie de trouver l'heure la plus recente. On est parti du principe que si au moins un de ces fichiers à été utilisé recemment, alors le paquet en question ne doit pas être supprimé.
+On est parti du principe que si au moins un de ces fichiers à été utilisé recemment, alors le paquet en question ne doit pas être supprimé.
+Une fois que cette liste d'heure est récupérée dans le fichier, on doit vérifier si toutes ces dates sont anciennes.
 Pour ce faire, on sépare dans des variables l'heure, les minutes, les jours depuis le début de l'année et l'année en cours. Puis on convertit tout en seconde.
 
 ```
-        #On extrait les infos de la ligne
-        heureLigne=${heure:0:2}
-        minuteLigne=${heure:3:2}
-        jourLigne=${heure:6:3}
-        anneeLigne=${heure:12:2}
+    heureCourante=$(date +%k)
+    minuteCourante=$(date +%M)
+    jourCourant=$(date +%j)
+    anneeCourante=$(($(date +%Y)-2000))
 
-        #On convertit tout ça en seconde
-        secondeLigne=$(((10#$minuteLigne*60)+(10#$heureLigne*3600)+(10#$jourLigne*86400)+(10#$anneeLigne*31536000)))
+    secondeCourante=$(((10#$minuteCourante*60)+($heureCourante*3600)+(10#$jourCourant*86400)+(10#$anneeCourante*31536000)))
 ```
 
-Dans une boucle while qui parcourt le fichier temporaire, on recherche l'heure la plus recente.
+Dans une boucle while qui parcourt le fichier temporaire, vérifie si cette heure est récente ou non.
+Si cette heure est trop récente, inutile de continuer : on ne doit pas désinstaller le paquet.
+Pour déterminer si l'heure est récente ou non, on la compare avec l'heure courante (elle aussi convertit en seconde) auquel on soustrait le temps contenu dans le fichier _serec.config_.
 
 ```
     while read heure
     do
-        #Trouver heure la plus recente
         #On extrait les infos de la ligne
         heureLigne=${heure:0:2}
         minuteLigne=${heure:3:2}
@@ -70,27 +70,28 @@ Dans une boucle while qui parcourt le fichier temporaire, on recherche l'heure l
         #On convertit tout ça en seconde
         secondeLigne=$(((10#$minuteLigne*60)+(10#$heureLigne*3600)+(10#$jourLigne*86400)+(10#$anneeLigne*31536000)))
 
-        #On compare avec l'heure la plus recente
-        if [ $secondeRec -lt $secondeLigne  ]
+        #on compare les dernières dates d'execution du fichier avec la date courante pour savoir si on doit le supprimer
+        if [ $(($secondeCourante-$temps)) -lt $secondeLigne  ]
         then
-            secondeRec=$secondeLigne
+            nePasSup=1 #le paquet ne doit pas être supprimer
+            break
         fi
 
     done < heureAcces
 ```
-
-Une fois qu'on a trouvé l'heure la plus recente, on la compare avec l'heure courante (elle aussi convertit en seconde) auquel on soustrait le temps contenu dans le fichier _serec.config_.
+ 
 Si le paquet n'a pas été utilisé depuis longtemps, on appelle la fonction de desinstallation qui se chargera de désinstaller le paquet et mettre à jour le log.
 
 ```
-    if [ $(($secondeCourante-$temps)) -gt $secondeRec  ]
+    #si le paquet ne doit pas être supprimer on ne rentrera pas dans le if
+    if [ $nePasSup -eq 0 ]
     then
         #desinstaller le paquet avec le programme de Loup
-        
         $lechemin/programmeC/exe $paquet $lechemin/desinstallation >/dev/null 2>&1
         if [ $? -eq 0 ]
         then
             sudo $lechemin/scriptDesinstallation $paquet
+
         fi
     fi
 ```
