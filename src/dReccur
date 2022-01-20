@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ce script à pour but de désinstaller tous les paquets de la liste verte qui n'ont pas
+# été utilisé depuis un certain temps en seconde défini dans serec.config
+
 #On récupère le chemin de serec.config
 cheminSerec='/home/romain/Documents/ProjetS3/serec.config'
 
@@ -16,19 +19,23 @@ cheminListe=${var##* }
 # On affiche les noms de chaque paquet avec leur heure de dernier acces
 while read paquet
 do
+    #On met dans un fichier temporaire heureAccès les dates de dernière execution de la plupart des fichiers du paquet
     find /usr -name $paquet -printf "%AH:%AM %Aj %AY\n" > heureAcces
 
-    #On definie des variables devant contenir l'heure al plus recente;
-    heureRec=00
-    minuteRec=00
-    jourRec=001
-    anneeRec=02
-    #On convertit cette heure en seconde
-    secondeRec=$((($minuteRec*60)+($heureRec*3600)+($jourRec*86400)+($anneeRec*31536000)))
+    #On met la variable boolean "nePasSup" à 0. Elle passera à 1 si le paquet ne doit pas être supprimer
+    nePasSup=0
+
+    #Comparer l'heure la plus recente avec l heure courante et temps limite contenu dans serec.config
+    heureCourante=$(date +%k)
+    minuteCourante=$(date +%M)
+    jourCourant=$(date +%j)
+    anneeCourante=$(($(date +%Y)-2000))
+
+    secondeCourante=$(((10#$minuteCourante*60)+($heureCourante*3600)+(10#$jourCourant*86400)+(10#$anneeCourante*31536000)))
+
 
     while read heure
     do
-        #Trouver heure la plus recente
         #On extrait les infos de la ligne
         heureLigne=${heure:0:2}
         minuteLigne=${heure:3:2}
@@ -38,30 +45,24 @@ do
         #On convertit tout ça en seconde
         secondeLigne=$(((10#$minuteLigne*60)+(10#$heureLigne*3600)+(10#$jourLigne*86400)+(10#$anneeLigne*31536000)))
 
-        #On compare avec l'heure la plus recente
-        if [ $secondeRec -lt $secondeLigne  ]
+        #on compare les dernières dates d'execution du fichier avec la date courante pour savoir si on doit le supprimer
+        if [ $(($secondeCourante-$temps)) -lt $secondeLigne  ]
         then
-            secondeRec=$secondeLigne
+            nePasSup=1 #le paquet ne doit pas être supprimer
+            break
         fi
 
     done < heureAcces
-    #TODO comparer l'heure la plus recente avec l heure courante et temps limite contenu dans serec.config
-    heureCourante=$(date +%k)
-    minuteCourante=$(date +%M)
-    jourCourant=$(date +%j)
-    anneeCourante=$(($(date +%Y)-2000))
 
-    secondeCourante=$(((10#$minuteCourante*60)+($heureCourante*3600)+(10#$jourCourant*86400)+(10#$anneeCourante*31536000)))
-
-
-    if [ $(($secondeCourante-$temps)) -gt $secondeRec  ]
+    #si le paquet ne doit pas être supprimer on ne rentrera pas dans le if
+    if [ $nePasSup -eq 0 ]
     then
         #desinstaller le paquet avec le programme de Loup
-        
         $lechemin/programmeC/exe $paquet $lechemin/desinstallation >/dev/null 2>&1
         if [ $? -eq 0 ]
         then
             sudo $lechemin/scriptDesinstallation $paquet
+
         fi
     fi
 
