@@ -1,1 +1,8 @@
-apt-cache --recurse depends $(dpkg --status | grep -e "Priority: required" -e "Priority: important" -e "Priority: standard" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/') | grep -v ^[' '] | sort -u > ListeRouge
+apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --no-recommends --no-enhances --recurse depends $(dpkg --status | grep -e "Priority: required" -e "Priority: important" -e "Priority: standard" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/') | grep -v ^[' '] | sort -u | xargs -L1 dpkg --status 2>/dev/null | grep ^["Priority:"].* -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' | grep -v ^[' '] > ListeRouge
+
+# on commence par listé les dependance de maniere recursive en enlevant les details ( les --), on cible les paquets aillant la priorité required, important, et standard.
+# sed a revoir
+# ensuite avec grep -v on on supprime les lignes qui commencent par un blanc afin de ne garder que les paquets qui nous interessent et enlever les messages du systèmes
+# on tri avec sort -u le programme dans l'ordre alphabétique afin de mieux s'y retrouver
+# ensuite avec la commande xarg on regarde si les paquets que l'on a ciblé sont installés sur le système afin de ne pas traiter des paquets non installés
+# ensuite on enleve de nouveau les blancs pour garder que les paquets et enlver les messages bizarres et mettre tout dans la liste rouge
