@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #On récupère le chemin de serec.config
-cheminSerec='/home/romain/Documents/ProjetS3/serec.config'
+cheminSerec='/usr/bin/SeReC/serec.config'
 
 # On récupère le temps de désinstallation défini dans serec.config
 var=$(sed -n '1p' $cheminSerec)
