@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #On récupère le chemin de serec.config
-cheminSerec='/home/romain/Documents/ProjetS3/serec.config'
+cheminSerec='/home/romain/Documents/ProjetS4/ProjetS3S4-Allo-memoire/src/serec.config'
 
 # On récupère le temps de désinstallation défini dans serec.config
 var=$(sed -n '1p' $cheminSerec)
@@ -12,6 +12,8 @@ lechemin=${var##* }
 
 var=$(sed -n '2p' $cheminSerec)
 cheminListe=${var##* }
+
+$lechemin/creeListeVerte
 
 # On affiche les noms de chaque paquet avec leur heure de dernier acces
 while read paquet
@@ -45,7 +47,7 @@ do
         fi
 
     done < heureAcces
-    #TODO comparer l'heure la plus recente avec l heure courante et temps limite contenu dans serec.config
+    # comparer l'heure la plus recente avec l heure courante et temps limite contenu dans serec.config
     heureCourante=$(date +%k)
     minuteCourante=$(date +%M)
     jourCourant=$(date +%j)
@@ -56,16 +58,11 @@ do
 
     if [ $(($secondeCourante-$temps)) -gt $secondeRec  ]
     then
-        #desinstaller le paquet avec le programme de Loup
-        
-        $lechemin/programmeC/exe $paquet $lechemin/desinstallation >/dev/null 2>&1
-        if [ $? -eq 0 ]
-        then
-            sudo $lechemin/scriptDesinstallation $paquet
-        fi
+        #desinstaller le paquet
+        $lechemin/scriptDesinstallation $paquet
     fi
 
-done < $cheminListe/listeVerte
+done < $cheminListe/ListeVerte
 rm heureAcces
 
 

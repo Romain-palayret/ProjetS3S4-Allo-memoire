@@ -1,6 +1,6 @@
 #!/bin/bash
 
-var=$(sed -n '3p' /home/romain/Documents/ProjetS3/serec.config)
+var=$(sed -n '3p' /home/romain/Documents/ProjetS4/ProjetS3S4-Allo-memoire/src/serec.config)
 chemin=${var##* }
 Ladate=$(date)
 echo -e \\n$Ladate \\n >>$chemin/LogInstallation.log
