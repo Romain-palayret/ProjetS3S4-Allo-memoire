@@ -1,1 +1,11 @@
-dpkg --status | grep "Priority: extra" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' > ListeVerte
+dpkg --status | grep -e "Priority: extra" -e "Priority: optional" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' > ListeVerteTemp
+
+>ListeVerte          #on créé la liste verte
+while read line     #on lit chaque paquet  de l'entrée standard
+do
+  if ! grep -q -m 1 "$line" ListeRouge  #si le paquet n'est pas au moins une fois dans ListeRouge
+  then
+    echo "$line" >>ListeVerte           #alors on ajoute le paquet à ListeVerte
+  fi
+done <ListeVerteTemp     #on envoie ListeVerteTemp sur l'entrée standard du while
+rm ListeVerteTemp
