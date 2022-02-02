@@ -13,6 +13,9 @@ lechemin=${var##* }
 var=$(sed -n '2p' $cheminSerec)
 cheminListe=${var##* }
 
+#On creer la liste Verte
+$lechemin/creeListeVerte
+
 # On affiche les noms de chaque paquet avec leur heure de dernier acces
 while read paquet
 do
@@ -56,13 +59,8 @@ do
 
     if [ $(($secondeCourante-$temps)) -gt $secondeRec  ]
     then
-        #desinstaller le paquet avec le programme de Loup
-        
-        $lechemin/programmeC/exe $paquet $lechemin/desinstallation >/dev/null 2>&1
-        if [ $? -eq 0 ]
-        then
-            sudo $lechemin/scriptDesinstallation $paquet
-        fi
+        #desinstaller le paquet vert
+            $lechemin/scriptDesinstallation $paquet
     fi
 
 done < $cheminListe/listeVerte
