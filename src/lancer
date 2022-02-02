@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #On récupère le chemin de serec.config
-cheminSerec='/home/romain/Documents/ProjetS3/serec.config'
+cheminSerec='/usr/bin/SeReC/serec.config'
 
 #On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
 echo "Veuillez saisir l'utilisateur : "
@@ -87,8 +87,7 @@ rm lebashrc
 var=$(sed -n '1p' $cheminSerec)
 secondeDes=${var##* }
 # On ajoute au PATH le chemin où est le script dReccur
-var=$(sed -n '5p' $cheminSerec)
-chemindReccur=${var##* }
+chemindReccur="/usr/bin/SeReC"
 
 
 # On ajoute la ligne qui correspond au lancement du script dReccur toutes les X secondes
@@ -98,13 +97,13 @@ nbLigne=0
 while read ligne
 do
     ((nbLigne++))	
-    if [[ $ligne == *"..$chemindReccur/dReccur" ]]
+    if [[ $ligne == *"$chemindReccur/dReccur"* ]]
     then
         sed -i.bak $nbLigne'd' /etc/crontab
     fi
 done < crontabText
 
-echo "*/$(($secondeDes/60)) * * * * root bash ..$chemindReccur/dReccur" >> /etc/crontab
+echo -e "*/$(($secondeDes/60)) * * * * root $chemindReccur/dReccur \n" >> /etc/crontab
 
 
 rm crontabText
