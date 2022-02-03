@@ -1,7 +1,7 @@
 # Documentation du programme dReccur :
 
 ## Description générale
-Le programme _dReccur_ est un script bash s'occupant de trier quel paquet n'a pas été utilisé depuis longtemps, puis d'appeller une fonction de désinstallation pour le désinstaller si la désinstallation de celui ci ne présente aucun risque pour la machine Debian.
+Le programme _dReccur_ est un script bash s'occupant de trier quel paquet n'a pas été utilisé depuis longtemps, puis d'appeller une fonction de désinstallation pour le désinstaller.
 Ce script sera executé à intervalles réguliers sans l'intervention de l'utilisateur.
 
 ## Description de la conception et réalisation du script
@@ -29,8 +29,15 @@ var=$(sed -n '2p' $cheminSerec)
 cheminListe=${var##* }
 ```
 
+On met à jour la ListeVerte.
+```
+#On creer la liste Verte
+$lechemin/creeListeVerte
+```
 Dans le fichier listeVerte sont stocké les noms des paquets qui ne sont pas nescessaire au fonctionnement de la machine Debian.
 Chaque ligne de ce fichier est un nom de paquet.
+Notre programme devant désinstaller les paquets de cette liste, il faut régulierement la mettre à jour pour qu'elle ne contienne pas des paquets qui ne sont plus dans la machine. 
+
 On parcourt donc ce fichier dans une boucle while et, avec la commande find, on stock dans un fichier temporaire _heureAcces_ l'ensemble des dernières heures d'acces de chaque fichier de _usr_ se terminant par le nom du paquet en question.
 
 ```
@@ -86,12 +93,6 @@ Si le paquet n'a pas été utilisé depuis longtemps, on appelle la fonction de 
     #si le paquet ne doit pas être supprimer on ne rentrera pas dans le if
     if [ $nePasSup -eq 0 ]
     then
-        #desinstaller le paquet avec le programme de Loup
-        $lechemin/programmeC/exe $paquet $lechemin/desinstallation >/dev/null 2>&1
-        if [ $? -eq 0 ]
-        then
-            sudo $lechemin/scriptDesinstallation $paquet
-
-        fi
+        $lechemin/scriptDesinstallation $paquet
     fi
 ```
