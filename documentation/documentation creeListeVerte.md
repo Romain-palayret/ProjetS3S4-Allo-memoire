@@ -30,8 +30,45 @@ Une seule ligne de code est nescessaire à cette étape :
 On commence tout d'abord par faire la commande ```dpkg --status``` qui va afficher les informations de tous les paquets du systèmes.
 
 _Voici ce que produit la commande_ :
-
+```
+Package: zlib1g
+Status: install ok installed
+Priority: optional
+Section: libs
+Installed-Size: 166
+Maintainer: Mark Brown <broonie@debian.org>
+Architecture: amd64
+Multi-Arch: same
+Source: zlib
+Version: 1:1.2.11.dfsg-2
+Provides: libz1
+Depends: libc6 (>= 2.14)
+Breaks: libxml2 (<< 2.7.6.dfsg-2), texlive-binaries (<< 2009-12)
+Conflicts: zlib1 (<= 1:1.0.4-7)
+Description: compression library - runtime
+ zlib is a library implementing the deflate compression method found
+ in gzip and PKZIP.  This package includes the shared library.
+Homepage: http://zlib.net/
+```
+_Ces info correspondent à un seul paquet, la commane "dpkg --status" affichera ces infos pour tous les paquets_
 
 On connecte ensuite la sortie standart de cette commande à la commande ```grep -e "Priority: extra" -e "Priority: optional" -B2``` afin d'extraire du resultat de la commande précédente les lignes contenant les priorité des paquets "extra" et "optionnal". Cette commande à donc une double fonction : trier les paquets pour ne prendre que ceux qui nous intéressent (à savoir les paquets "extra" et "optionnal") mais aussi d'extraire de la commande ```dpkg --status``` les lignes contenant le nom des paquets.
 
 _Voici ce que produit la commande ```dpkg --status | grep -e "Priority: extra" -e "Priority: optional" -B2```_ :
+```
+Package: yelp-xsl
+Status: install ok installed
+Priority: optional
+--
+Package: zenity
+Status: install ok installed
+Priority: optional
+--
+Package: zenity-common
+Status: install ok installed
+Priority: optional
+--
+Package: zlib1g
+Status: install ok installed
+Priority: optional
+```
