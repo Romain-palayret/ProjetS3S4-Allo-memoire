@@ -76,3 +76,34 @@ Priority: optional
 On connecte ensuite la sortie standart de cette commande à la commande ```sed -n '/Package/p'``` afin d'extraire les lignes contenant le nom des paquets.
 
 _Voici un extrait de ce que produit la commande ```dpkg --status | grep -e "Priority: extra" -e "Priority: optional" -B2 | sed -n '/Package/p'```_ :
+```
+Package: unattended-upgrades
+Package: uno-libs-private
+Package: unoconv
+Package: unzip
+Package: update-inetd
+Package: upower
+Package: ure
+Package: usb-modeswitch
+Package: usb-modeswitch-data
+Package: usb.ids
+```
+
+On connecte ensuite la sortie standart de cette commande à la commande ```sed -r 's/Package:\s(.*)/\1/'``` afin d'extraire le noms des paquets. 
+
+_Voici un extrait de ce que produit la commande ```dpkg --status | grep -e "Priority: extra" -e "Priority: optional" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' ```_ :
+```
+lua-json
+lua-lpeg
+lua-socket
+mailcap
+malcontent
+malcontent-gui
+manpages-fr
+media-player-info
+mesa-va-drivers
+mesa-vdpau-drivers
+mesa-vulkan-drivers
+mime-support
+```
+On stockera ensuite cette liste dans un fichier temporaire ListeVerteTemp.
