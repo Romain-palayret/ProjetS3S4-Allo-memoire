@@ -17,20 +17,20 @@ apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --n
 
 ## Extrait final du résultat de creeListeRouge :
 
-libbrotli1
-libbsd0
-libbz2-1.0
-libc6
-libcap2
-libcap2-bin
-libcap-ng0
-libc-bin
-libcbor0
-libc-l10n
-libcom-err2
-libcrypt1
-libcryptsetup12
-libcurl3-gnutls
++ libbrotli1
++ libbsd0
++ libbz2-1.0
++ libc6
++ libcap2
++ libcap2-bin
++ libcap-ng0
++ libc-bin
++ libcbor0
++ libc-l10n
++ libcom-err2
++ libcrypt1
++ libcryptsetup12
++ libcurl3-gnutls
 
 
 ## cat ListeRouge | wc -l  : 
@@ -39,18 +39,18 @@ libcurl3-gnutls
 
 ## apt-redepends libc6 : 
 
-Reading package lists... Done
-Building dependency tree... Done
-Reading state information... Done
-libc6
-  Depends: libcrypt1
-  Depends: libgcc-s1
-libcrypt1
-  Depends: libc6 (>= 2.25)
-libgcc-s1
-  Depends: gcc-10-base (= 10.2.1-6)
-  Depends: libc6 (>= 2.14)
-gcc-10-base
++ Reading package lists... Done
++ Building dependency tree... Done
++ Reading state information... Done
++ libc6
++   Depends: libcrypt1
++   Depends: libgcc-s1
++ libcrypt1
++   Depends: libc6 (>= 2.25)
++ libgcc-s1
++   Depends: gcc-10-base (= 10.2.1-6)
++   Depends: libc6 (>= 2.14)
++ gcc-10-base
 
 
 ## notre script qui remplace apt-rdepends : seule difference c'est pas trié dans l'ordre alphabétique : 
@@ -61,15 +61,15 @@ apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --n
 
 ### resultat :
 
-libc6
-  Dépend: libgcc-s1
-  Dépend: libcrypt1
-libgcc-s1
-  Dépend: gcc-10-base
-  Dépend: libc6
-libcrypt1
-  Dépend: libc6
-gcc-10-base
++ libc6
++   Dépend: libgcc-s1
++   Dépend: libcrypt1
++ libgcc-s1
++   Dépend: gcc-10-base
++   Dépend: libc6
++ libcrypt1
++   Dépend: libc6
++ gcc-10-base
 
 ## Ensuite on applique notre script en ciblant les paquets required, important et standard : pour les avoirs avec leurs dépendances : 
 
@@ -79,33 +79,33 @@ apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --n
 
 ### resultat :
 
-libmpfr6
-  Dépend: libc6
-  Dépend: libgmp10
-libsigsegv2
-  Dépend: libc6
-libbrotli1
-  Dépend: libc6
-libldap-2.4-2
-  Dépend: libc6
-  Dépend: libgnutls30
-  Dépend: libsasl2-2
-libnghttp2-14
-  Dépend: libc6
-librtmp1
-  Dépend: libc6
-  Dépend: libgmp10
-  Dépend: libgnutls30
-  Dépend: libhogweed6
-  Dépend: libnettle8
-  Dépend: zlib1g
-libssh2-1
-  Dépend: libc6
-  Dépend: libgcrypt20
-  Dépend: zlib1g
-<python3:any>
-<debconf-2.0>
-<perlapi-5.32.0>
++ libmpfr6
++    Dépend: libc6
++   Dépend: libgmp10
++ libsigsegv2
++   Dépend: libc6
++ libbrotli1
++   Dépend: libc6
++ libldap-2.4-2
++   Dépend: libc6
++   Dépend: libgnutls30
++   Dépend: libsasl2-2
++ libnghttp2-14
++   Dépend: libc6
++ librtmp1
++   Dépend: libc6
++   Dépend: libgmp10
++   Dépend: libgnutls30
++   Dépend: libhogweed6
++   Dépend: libnettle8
++   Dépend: zlib1g
++ libssh2-1
++   Dépend: libc6
++   Dépend: libgcrypt20
++   Dépend: zlib1g
++ <python3:any>
++ <debconf-2.0>
++ <perlapi-5.32.0>
 
 # Voici le script final : 
 
