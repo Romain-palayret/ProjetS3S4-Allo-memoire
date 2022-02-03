@@ -13,9 +13,9 @@ Au début de script on va chercher de manière récursive les dépendances des p
 apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --no-recommends --no-enhances --recurse depends $(dpkg --status | grep -e "Priority: required" -e "Priority: important" -e "Priority: standard" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/') | grep -v ^[' '] | sort -u | xargs -L1 dpkg --status 2>/dev/null | grep ^["Priority:"].* -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' | grep -v ^[' '] > ListeRouge
 ```
 
-#Comparaison notre script à apt-rdepends : 
+# Comparaison notre script à apt-rdepends : 
 
-##Extrait final du résultat de creeListeRouge :
+## Extrait final du résultat de creeListeRouge :
 
 libbrotli1
 libbsd0
@@ -33,11 +33,11 @@ libcryptsetup12
 libcurl3-gnutls
 
 
-##cat ListeRouge | wc -l  : 
+## cat ListeRouge | wc -l  : 
 
 254
 
-##apt-redepends libc6 : 
+## apt-redepends libc6 : 
 
 Reading package lists... Done
 Building dependency tree... Done
@@ -53,13 +53,13 @@ libgcc-s1
 gcc-10-base
 
 
-##notre script qui remplace apt-rdepends : seule difference c'est pas trié dans l'ordre alphabétique : 
+## notre script qui remplace apt-rdepends : seule difference c'est pas trié dans l'ordre alphabétique : 
 
-###code :
+### code :
 
 apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --no-recommends --no-enhances --recurse depends libc6
 
-###resultat :
+### resultat :
 
 libc6
   Dépend: libgcc-s1
@@ -71,13 +71,13 @@ libcrypt1
   Dépend: libc6
 gcc-10-base
 
-##Ensuite on applique notre script en ciblant les paquets required, important et standard : pour les avoirs avec leurs dépendances : 
+## Ensuite on applique notre script en ciblant les paquets required, important et standard : pour les avoirs avec leurs dépendances : 
 
-###code :
+### code :
 
 apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --no-recommends --no-enhances --recurse depends $(dpkg --status | grep -e "Priority: required" -e "Priority: important" -e "Priority: standard" -B2 )
 
-###resultat :
+### resultat :
 
 libmpfr6
   Dépend: libc6
@@ -107,7 +107,7 @@ libssh2-1
 <debconf-2.0>
 <perlapi-5.32.0>
 
-#Voici le script final : 
+# Voici le script final : 
 
 apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --no-recommends --no-enhances --recurse depends $(dpkg --status | grep -e "Priority: required" -e "Priority: important" -e "Priority: standard" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/') | grep -v ^[' '] | sort -u | xargs -L1 dpkg --status 2>/dev/null | grep ^["Priority:"].* -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' | grep -v ^[' '] > ListeRouge
 
