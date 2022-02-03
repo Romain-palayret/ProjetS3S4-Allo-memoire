@@ -21,8 +21,17 @@ Ce script est décomposé en 2 étapes :
 - Fabrication d'une liste contenant tous les paquets "optionnal" et "required" du système (désignée plus bas _ListeVerteTemp_)
 - Suppression des paquets en commun avec la liste Rouge et la liste Orange
 
-#### Fabrication de la _ListeVerteTemp_
+### Fabrication de la _ListeVerteTemp_
 
 Une seule ligne de code est nescessaire à cette étape :
 
 ```dpkg --status | grep -e "Priority: extra" -e "Priority: optional" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' > ListeVerteTemp```
+
+On commence tout d'abord par faire la commande ```dpkg --status``` qui va afficher les informations de tous les paquets du systèmes.
+
+_Voici ce que produit la commande_ :
+
+
+On connecte ensuite la sortie standart de cette commande à la commande ```grep -e "Priority: extra" -e "Priority: optional" -B2``` afin d'extraire du resultat de la commande précédente les lignes contenant les priorité des paquets "extra" et "optionnal". Cette commande à donc une double fonction : trier les paquets pour ne prendre que ceux qui nous intéressent (à savoir les paquets "extra" et "optionnal") mais aussi d'extraire de la commande ```dpkg --status``` les lignes contenant le nom des paquets.
+
+_Voici ce que produit la commande ```dpkg --status | grep -e "Priority: extra" -e "Priority: optional" -B2```_ :
