@@ -1,8 +1,0 @@
-progress-linux-desktop
-task-xfce-desktop
-task-mate-desktop
-task-lxqt-desktop
-task-lxde-desktop
-task-kde-desktop
-task-gnome-flashback-desktop
-task-cinnamon-desktop

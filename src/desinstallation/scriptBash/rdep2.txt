@@ -1,3 +1,0 @@
-open-vm-tools-sdmp 
-open-vm-tools-dev 
-open-vm-tools-desktop 

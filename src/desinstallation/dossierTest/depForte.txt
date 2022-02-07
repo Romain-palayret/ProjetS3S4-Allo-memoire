@@ -1,8 +1,0 @@
-gnome-core 
-gnome-shell-extensions 
-gnome-shell-extensions 
-gnome-shell-extension-prefs 
-gnome-remote-desktop 
-gnome-session 
-gdm3 
-chrome-gnome-shell

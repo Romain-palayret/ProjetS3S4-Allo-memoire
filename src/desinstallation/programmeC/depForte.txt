@@ -1,5 +1,0 @@
-unattended-upgrades 
-python3-software-properties 
-python3-reportbug
-python3-debian
-apt-listchanges 
