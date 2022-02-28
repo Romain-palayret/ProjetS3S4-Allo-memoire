@@ -110,7 +110,7 @@ On stockera ensuite cette liste dans un fichier temporaire _ListeVerteTemp_.
 
 ### Fabrication de Listeverte
 
-Le problème de la _ListeVerteTemp_ est qu'il ne s'agit que d'une liste des paquets "optional" et "extra" du système. Or certain de ces paquets sont aussi présents dans la _ListeRouge_  car ils sont utilisé par des paquets "important", "required" ou "standart" (par exemple le paquet _libc6_). Il faut donc enlever les paquets en communs entre la _ListeVerteTemp_ et la _ListeRouge_. Pource faire on utilise le code ci-dessous :
+Le problème de la _ListeVerteTemp_ est qu'il ne s'agit que d'une liste des paquets "optional" et "extra" du système. Or certain de ces paquets sont aussi présents dans la _ListeRouge_  car ils sont utilisé par des paquets "important", "required" ou "standart" (par exemple le paquet _libc6_). Il faut donc enlever les paquets en communs entre la _ListeVerteTemp_ et la _ListeRouge_. Pour ce faire on utilise le code ci-dessous :
 ```
 >ListeVerte          #on créé la liste verte
 while read line     #on lit chaque paquet  de l'entrée standard
