@@ -2,7 +2,7 @@
 
 echo "Tentative d'installation de $1"
 
-var=$(sed -n '3p' /usr/bin/SeReC/serec.config)
+var=$(sed -n '3p' /usr/bin/serec.config)
 chemin=${var##* }
 Ladate=$(date)
 echo -e \\n$Ladate \\n >>$chemin/LogInstallation.log
