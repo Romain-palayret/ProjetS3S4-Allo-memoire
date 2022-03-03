@@ -17,4 +17,4 @@ do
     echo "Tentative de desinstallation de " $paquet
     $lechemin/scriptDesinstallation $paquet
 
-done < $cheminListe/listeVerte
+done < $cheminListe/ListeVerte
