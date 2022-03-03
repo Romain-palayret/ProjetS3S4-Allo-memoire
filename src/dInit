@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#On récupère le chemin de serec.config
+cheminSerec='/usr/bin/serec.config'
+
+var=$(sed -n '4p' $cheminSerec)
+lechemin=${var##* }
+
+
+#On creer la liste Verte
+$lechemin/creeListeVerte
+
+# On affiche les noms de chaque paquet avec leur heure de dernier acces
+while read paquet
+do
+    #desinstaller le paquet vert
+    $lechemin/scriptDesinstallation $paquet
+
+done < $cheminListe/listeVerte
