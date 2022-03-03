@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #On récupère le chemin de serec.config
-cheminSerec='/usr/bin/SeReC/serec.config'
+cheminSerec='/usr/bin/serec.config'
 
 #On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
 echo "Veuillez saisir l'utilisateur : "
