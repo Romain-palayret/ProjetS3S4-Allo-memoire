@@ -6,6 +6,37 @@ cheminSerec='/usr/bin/SeReC/serec.config'
 #On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
 echo "Veuillez saisir l'utilisateur : "
 read nom
+
+# On demande le type de profil de l'utilisateur
+echo ""
+echo "=== CHOIX DU PROFIL ==="
+echo "1) Administrateur"
+echo "2) Secrétaire"
+echo "3) Gamer"
+echo "4) Mathématicien"
+echo "5) Ingénieur Audiovisuel"
+
+numListe=-1
+
+while (($numListe == -1))
+do 
+    echo -n "Saisir le numéro du profil souhaité : ";
+    read numListe
+    
+    case $numListe in
+        1) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeAdmin\n      then" >> ../usr/bin/creeListeVerte;;
+        2) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeSecretaire\n      then" >> ../usr/bin/creeListeVerte;;
+        3) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeGamer\n      then" >> ../usr/bin/creeListeVerte;;
+        4) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeMath\n      then" >> ../usr/bin/creeListeVerte;;
+        5) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeInge\n      then" >> ../usr/bin/creeListeVerte;;
+        *) echo "Erreur, veuillez choisir un chiffre entre 1 et 5"
+           numListe=-1;;
+        
+    esac
+done 
+
+echo -e "         echo \"\$line\" >>ListeVerte           #alors on ajoute le paquet à ListeVerte\n      fi\n    fi\n  fi\ndone <ListeVerteTemp     #on envoie ListeVerteTemp sur l'entrée standard du while\nrm ListeVerteTemp" >> ../usr/bin/creeListeVerte
+ 
 #Le fichier lancer doit être executer dans son dossier, et pas en dehors
 chemin=$(pwd)
 
