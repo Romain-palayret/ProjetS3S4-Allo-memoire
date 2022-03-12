@@ -1,0 +1,19 @@
+#!/bin/bash
+
+> loes
+while read paquet
+do
+	(dpkg --status $paquet | grep "Breaks: ".* -B20 | sed -n '/Package:/p' | sed -r 's/Package:\s(.*)/\1/' | sed -z 's/\n/ /g') >> loes
+	(dpkg --status $paquet | grep "Breaks: ".* -B20 | sed -n '/Breaks:/p') >> loes
+	
+done < ListeVerte
+
+set -vx
+> slo
+while read ligne
+do
+	while read paquetOrange
+	do
+		grep "$paquetOrange" loes | cut -f 1 -d " " >> slo
+	done < ListeOrangeDefaut
+done < loes
