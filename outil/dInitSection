@@ -1,0 +1,19 @@
+
+# On affiche les noms de chaque paquet avec leur heure de dernier acces
+while read line
+do
+    if ! grep -q -m 1 "$line" listeOrangeParDefaut
+    then
+      if ! grep -q -m 1 "$line" listeOrangeAdministrateur
+      then
+          if ! grep -q -m 1 "$line" slo
+          then
+
+	     #desinstaller le paquet vert
+	     echo "Tentative de desinstallation de" $line
+	    apt-get remove --purge $line
+	fi
+      fi
+    fi
+   
+done < ListeVerte
