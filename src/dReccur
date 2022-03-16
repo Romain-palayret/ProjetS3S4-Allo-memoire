@@ -63,8 +63,5 @@ do
             $lechemin/scriptDesinstallation $paquet
     fi
 
-done < $cheminListe/listeVerte
+done < $cheminListe/ListeVerte
 rm heureAcces
-
-
-
