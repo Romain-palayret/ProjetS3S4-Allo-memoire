@@ -1,4 +1,4 @@
 creeListeRouge
 echo '== Liste rouge =='
-cat listeRouge
-rm listeRouge
+cat ListeRouge
+rm ListeRouge
