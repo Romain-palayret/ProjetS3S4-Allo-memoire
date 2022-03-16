@@ -4,7 +4,7 @@
 cheminSerec='/usr/bin/serec.config'
 
 #On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
-echo "Veuillez saisir l'utilisateur : "
+echo -n "Veuillez saisir l'utilisateur : "
 read nom
 
 # On demande le type de profil de l'utilisateur
@@ -24,21 +24,21 @@ do
     read numListe
     
     case $numListe in
-        1) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeAdmin\n      then" >> ../usr/bin/creeListeVerte;;
-        2) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeSecretaire\n      then" >> ../usr/bin/creeListeVerte;;
-        3) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeGamer\n      then" >> ../usr/bin/creeListeVerte;;
-        4) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeMath\n      then" >> ../usr/bin/creeListeVerte;;
-        5) echo -e "      if ! grep -q -m 1 "$line" ListeOrangeInge\n      then" >> ../usr/bin/creeListeVerte;;
+        1) echo -e "      if ! grep -q -m 1 \"\$line\" /SeReC_listes/ListeOrangeAdmin\n      then" >> /usr/bin/creeListeVerte;;
+        2) echo -e "      if ! grep -q -m 1 \"\$line\" /SeReC_listes/ListeOrangeSecretaire\n      then" >> /usr/bin/creeListeVerte;;
+        3) echo -e "      if ! grep -q -m 1 \"\$line\" /SeReC_listes/ListeOrangeGamer\n      then" >> /usr/bin/creeListeVerte;;
+        4) echo -e "      if ! grep -q -m 1 \"\$line\" /SeReC_listes/ListeOrangeMath\n      then" >> /usr/bin/creeListeVerte;;
+        5) echo -e "      if ! grep -q -m 1 \"\$line\" /SeReC_listes/ListeOrangeInge\n      then" >> /usr/bin/creeListeVerte;;
         *) echo "Erreur, veuillez choisir un chiffre entre 1 et 5"
            numListe=-1;;
         
     esac
 done 
 
-echo -e "         echo \"\$line\" >>ListeVerte           #alors on ajoute le paquet à ListeVerte\n      fi\n    fi\n  fi\ndone <ListeVerteTemp     #on envoie ListeVerteTemp sur l'entrée standard du while\nrm ListeVerteTemp" >> ../usr/bin/creeListeVerte
- 
+echo -e "         echo \"\$line\" >>ListeVerte           #alors on ajoute le paquet à ListeVerte\n      fi\n    fi\n  fi\ndone <ListeVerteTemp     #on envoie ListeVerteTemp sur l'entrée standard du while\nrm ListeVerteTemp\nrm ListeRouge" >> ../usr/bin/creeListeVerte
+        
 #Le fichier lancer doit être executer dans son dossier, et pas en dehors
-chemin=$(pwd)
+chemin='/usr/bin'
 
 #On ecrit la fonction command_not_found_handle si elle n'existe pas déjà
 cat /etc/bash.bashrc > bashrc
@@ -118,7 +118,7 @@ rm lebashrc
 var=$(sed -n '1p' $cheminSerec)
 secondeDes=${var##* }
 # On ajoute au PATH le chemin où est le script dReccur
-chemindReccur="/usr/bin/SeReC"
+chemindReccur="/usr/bin"
 
 
 # On ajoute la ligne qui correspond au lancement du script dReccur toutes les X secondes
@@ -138,4 +138,7 @@ echo -e "*/$(($secondeDes/60)) * * * * root $chemindReccur/dReccur \n" >> /etc/c
 
 
 rm crontabText
+
+echo "=== Installation terminé ==="
+echo -e "Veuillez taper la commande suivant \"dInit\" qui désinstallera les paquets inutiles ! \n"
 
