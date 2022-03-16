@@ -1,4 +1,4 @@
-apt-cache --no-breaks --no-conflicts --no-suggests --no-breaks --no-replaces --no-recommends --no-enhances --recurse depends $(dpkg --status | grep -e "Priority: required" -e "Priority: important" -e "Priority: standard" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/') | grep -v ^[' '] | sort -u | xargs -L1 dpkg --status 2>/dev/null | grep ^["Priority:"].* -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' | grep -v ^[' '] > ListeRouge
+apt-cache --no-conflicts --no-suggests --no-replaces --no-recommends --no-enhances --recurse depends $(dpkg --status | grep -e "Priority: required" -e "Priority: important" -e "Priority: standard" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/') | grep -v ^[' '] | sort -u | xargs -L1 dpkg --status 2>/dev/null | grep ^["Priority:"].* -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' | grep -v ^[' '] > ListeRouge
 
 # on commence par listé les dependance de maniere recursive en enlevant les details ( les --), on cible les paquets aillant la priorité required, important, et standard.
 # sed a revoir
