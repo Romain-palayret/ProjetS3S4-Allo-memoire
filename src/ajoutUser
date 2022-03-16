@@ -1,0 +1,35 @@
+#!/bin/bash
+
+#--------------------------------------------
+# permet de configurer SeReC pour un nouveau type d'utilisateur
+#--------------------------------------------
+
+#On récupère le chemin de serec.config
+cheminSerec='/usr/bin/serec.config'
+
+#On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
+echo "Veuillez saisir l'utilisateur : "
+read nom
+
+# On demande le type de profil de l'utilisateur
+echo ""
+echo "=== CHOIX DU PROFIL ==="
+echo "1) Administrateur"
+echo "2) Secrétaire"
+echo "3) Gamer"
+echo "4) Mathématicien"
+echo "5) Ingénieur Audiovisuel"
+
+numListe=-1
+
+while (($numListe == -1))
+do 
+    echo -n "Saisir le numéro du profil souhaité : ";
+    read numListe
+        
+    #TODO Gerer la listeOrange ici
+        
+done 
+
+echo -e " Lorsque tous les utilisateurs seront configurés,\nveuillez taper la commande suivant \"dInit\" qui désinstallera les paquets inutiles ! \n"
+

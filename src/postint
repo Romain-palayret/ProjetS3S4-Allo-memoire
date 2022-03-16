@@ -1,0 +1,87 @@
+#!/bin/bash
+
+#On récupère le chemin de serec.config
+#TODO mettre le chemin definitif
+cheminSerec='/usr/bin/serec.config'
+
+
+#Le fichier lancer doit être executer dans son dossier, et pas en dehors
+#TODO mettre le chemin definitif
+chemin='/usr/bin'
+
+#On ecrit la fonction command_not_found_handle si elle n'existe pas déjà
+cat /etc/bash.bashrc > bashrc
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "command_not_found_handle() {" ]]
+    then
+        dejaEcrit=1
+    fi
+done < bashrc
+
+if [ $dejaEcrit -eq "0" ]
+then
+echo -e "command_not_found_handle() {\n    .$chemin/client.exe \"\$1\";\n    if [ -e /usr/bin/\"\$1\" ]\n    then\n        \"\$1\";\n    else\n        echo \"commande introuvable\";\n    fi\n    return 127;\n}" | sudo tee -a /etc/bash.bashrc
+fi
+rm bashrc
+
+
+
+
+# On ajoute au PATH le chemin où sont stockée les listes pour pouvoir executées
+# les listes n'importe où dans la console
+var=$(sed -n '2p' $cheminSerec)
+cheminListe=${var##* }
+
+#On ajoute la ligne si elle n'est pas déjà ecrite
+cat /home/$nom/.bashrc > lebashrc
+dejaEcrit=0
+while read ligne
+do
+    if [[ $ligne == "export PATH=\"\$PATH:$cheminListe\"" ]]
+    then
+        dejaEcrit=1
+    fi
+done < lebashrc
+
+if [ $dejaEcrit -eq "0" ]
+then
+    echo "export PATH=\"\$PATH:$cheminListe\"" >> /home/$nom/.bashrc
+fi
+rm lebashrc
+
+
+
+
+
+#TODO -------------------- modifier a partir d'ici quand on aura le serveur desinstallation
+
+
+# On récupère le nombre de seconde après la désinstallation
+var=$(sed -n '1p' $cheminSerec)
+secondeDes=${var##* }
+# On ajoute au PATH le chemin où est le script dReccur
+chemindReccur="/usr/bin"
+
+
+
+# On ajoute la ligne qui correspond au lancement du script dReccur toutes les X secondes
+cat /etc/crontab > crontabText
+
+nbLigne=0
+while read ligne
+do
+    ((nbLigne++))	
+    if [[ $ligne == *"$chemindReccur/dReccur"* ]]
+    then
+        sed -i.bak $nbLigne'd' /etc/crontab
+    fi
+done < crontabText
+
+echo -e "*/$(($secondeDes/60)) * * * * root $chemindReccur/dReccur \n" >> /etc/crontab
+
+
+rm crontabText
+
+echo "=== Installation terminé ==="
