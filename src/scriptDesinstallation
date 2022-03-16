@@ -4,6 +4,4 @@ var=$(sed -n '3p' /usr/bin/serec.config)
 chemin=${var##* }
 Ladate=$(date)
 echo -e \\n$Ladate \\n >>$chemin/LogInstallation.log
-apt -y --purge autoremove $1 2>/dev/null >>$chemin/LogInstallation.log
-
-
+apt-get -y remove --purge $1 2>/dev/null >>$chemin/LogInstallation.log
