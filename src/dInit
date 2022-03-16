@@ -14,7 +14,8 @@ $lechemin/creeListeVerte
 while read paquet
 do
     #desinstaller le paquet vert
-    echo "Tentative de desinstallation de " $paquet
+    echo "Tentative de desinstallation de" $paquet
     $lechemin/scriptDesinstallation $paquet
 
-done < $cheminListe/ListeVerte
+done < ListeVerte
+rm ListeVerte
