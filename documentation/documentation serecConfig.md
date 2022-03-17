@@ -20,9 +20,9 @@ Ces valeurs peuvent être modifiée à la main, directement dans le _serec.confi
 Le script _ajoutUser_ à besoin d'une ligne vide à la fin du fichier pour fonctionner, c'est pourquoi il ne faut pas supprimer la dernière ligne.
 
 ```
-temps de desinstallation : 2400
-emplacement des listes : /usr/bin/SeReC
-emplacement du Log : /usr/bin/SeReC
+temps de desinstallation : 30
+emplacement des listes : /etc/SeReC/SeReC_listes
+emplacement du Log : /etc/SeReC/SeReC_log
 emplacement de Serec : /usr/bin/SeReC
 
 Liste des profils :
