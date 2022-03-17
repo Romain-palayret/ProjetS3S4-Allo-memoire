@@ -1,0 +1,15 @@
+#!/bin/bash
+>bigTaille
+
+taille=0
+while read paquet
+do
+	(dpkg --status $paquet | grep "Installed-Size: ".* -B20 | sed -n '/Installed-Size/p' | sed -r 's/Installed-Size:\s(.*)/\1/') >> bigTaille
+done < ListeVerte
+
+while read tailles
+do 
+	taille=$(($taille + $tailles))
+done < bigTaille
+
+echo $taille
