@@ -1,4 +1,4 @@
-# Documentation du programme d'installation :
+# Documentation du programme de desinstallation :
 
 ## Description générale
 Le programme _serveurDesinstallation.c_ est un programme C s'occupant de l'appel du programme de désinstallation _dReccur_ toutes les X minutes.
