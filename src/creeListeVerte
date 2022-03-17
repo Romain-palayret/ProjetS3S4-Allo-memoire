@@ -1,55 +1,54 @@
 #!/bin/bash
 
-function chercherDansListe() 
-{
-   paquet=$1
-   cheminListe=$2
-   typeProfil=$3
-   
-   var=$(sed -n $typeProfil'p' /etc/SeReC/serec.config)
-   booleanProfil=${var##* }
-   echo "la"
-   if [[ $booleanProfil == 0 ]]
-   then
-       return 0
-   else
-      if ! grep -q -m 1 "$1" "$2"
-      then
-        return 0    
-      else
-         return 1 
-      fi
-   fi   
-}
+#--------------------------------------------
+# permet de configurer SeReC pour un nouveau type d'utilisateur
+#--------------------------------------------
 
-creeListeRouge
-dpkg --status | grep -e "Priority: extra" -e "Priority: optional" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' > ListeVerteTemp
+#On récupère le chemin de serec.config
+cheminSerec='/usr/etc/SeReC/serec.config'
 
->ListeVerte          #on créé la liste verte
-while read line     #on lit chaque paquet  de l'entrée standard
-do
-  if ! grep -q -m 1 "$line" ListeRouge  #si le paquet n'est pas au moins une fois dans ListeRouge
-  then	
-    if ! grep -q -m 1 "$line" /etc/SeReC/SeReC_listes/ListeOrangeDefaut
-    then
-        somme=0
-        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeAdmin 7)
-        somme=$(($somme + $?))
-        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeSecretaire 8)
-        somme=$(($somme + $?))
-        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeGamer 9)
-        somme=$(($somme + $?))
-        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeMath 10)
-        somme=$(($somme + $?))
-        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeInge 11)
-        somme=$(($somme + $?))
+#On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
+echo "Veuillez saisir l'utilisateur : "
+read nom
 
-        if [[ $somme == 0 ]]
-        then
-            echo "$line" >>ListeVerte           #alors on ajoute le paquet à ListeVerte
-        fi
-    fi
-  fi
-done < ListeVerteTemp     #on envoie ListeVerteTemp sur l'entrée standard du while\nrm ListeVerteTemp\nrm ListeRouge
+# On demande le type de profil de l'utilisateur
+echo ""
+echo "=== CHOIX DU PROFIL ==="
+echo "1) Administrateur"
+echo "2) Secrétaire"
+echo "3) Gamer"
+echo "4) Mathématicien"
+echo "5) Ingénieur Audiovisuel"
 
+numListe=-1
 
+while (($numListe == -1))
+do 
+    echo -n "Saisir le numéro du profil souhaité : ";
+    read numListe
+    
+    case $numListe in
+        1) 
+        sed -i '7d' $cheminSerec
+        sed -i "7i\Administrateur : 1\t" $cheminSerec
+        ;;
+        2) 
+        sed -i '8d' $cheminSerec
+        sed -i "8i\Secretaire : 1\t" $cheminSerec
+        ;;
+        3) 
+        sed -i '9d' $cheminSerec
+        sed -i "9i\Gamer : 1\t" $cheminSerec
+        ;;
+        4)
+        sed -i '10d' $cheminSerec
+        sed -i "10i\Mathematicien : 1\t" $cheminSerec
+        ;;
+        5) 
+        sed -i '11d' $cheminSerec
+        sed -i "11i\Ingenieur Audio-Visuel : 1\t" $cheminSerec
+        ;;
+        *) echo "Erreur, veuillez choisir un chiffre entre 1 et 5"
+           numListe=-1;;
+    esac
+done
