@@ -87,6 +87,11 @@ int main(void){
 
 
     for(;;){
+	    
+	time(&now);
+	struct tm *local = localtime(&now); // local time ne fait QUE CONVERTIR 
+	sprintf(dateNow, "%d:%02d:%02d:%02d:%02d" , local->tm_year+1900 , local->tm_mon+1 , local->tm_mday , local->tm_hour ,
+		    local->tm_min);
     
         if(strcmp(dateCalcule , dateNow) == 0){
 	
