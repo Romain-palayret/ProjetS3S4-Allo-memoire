@@ -1,4 +1,4 @@
-#Description generale 
+# Description generale 
 
 ## L'objectif 
 L'objectif de ce serveur est d'intercepter une demande du client qui lui même aura été initié par l'appel de la command not found. Le rôle de ce serveur 
@@ -12,7 +12,9 @@ est d'installer le programme sur la machine lorsque le client appelle command no
 - il renvoit le résultat de la commande , 0 si tout s'est bien passé et 1 si il y a eu une défaillance 
 
 
-#Analyse du Programme 
+# Analyse du Programme 
+
+## Boucle Principale 
 
 ````    for(;;){
     
@@ -31,3 +33,10 @@ est d'installer le programme sur la machine lorsque le client appelle command no
     }
 }
 ````
+
+Dans cette boucle on crée une structure réseau client , on calcule taille de cette structure ainsi qu'une variable thread locale
+à la boucle. On accepte ensuite un client demandant de se connecter , et on vérifie si clientSock -1. Si tout s'est bien 
+passé jusque là on créer un thread dans lequel on passe l'adresse du socket client ainsi créé. 
+
+## 
+
