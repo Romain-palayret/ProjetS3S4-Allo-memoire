@@ -28,7 +28,6 @@ typedef struct temp{
 int lectureConfig () {
 
     char ligne[500];  
-    int retour; 
     FILE *fichier = fopen("/usr/bin/SeReC/serec.config" , "r"); 
     fgets(ligne , sizeof(ligne) , fichier); 
     
