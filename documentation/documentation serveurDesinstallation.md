@@ -81,7 +81,7 @@ typedef struct temp{
 }temp;
 ```
 
-La fonction _calculTemps()_ lit l'heure et la date actuelle ,
+
 ```
 void calculTemps (temp *Temp){      
     struct tm *tempCalcule;
@@ -98,25 +98,42 @@ void calculTemps (temp *Temp){
 }
 ```
 
-### Creation _/etc/rc.local_ et lancement automatique du serveur :
+## La fonction main 
 
-Sur la dernière version de Debian, le fichier _/etc/rc.local_ n'existe pas. C'est pourquoi on doit le recreer de 0.
-```
-> /etc/rc.local
-```
+La fonction main a pour objectif d'appliquer l'algorithme théorique présenté dans la première partie : 
 
-Pour fonctionner, ce fichier doit respecter un certain format : il doit commencer avec des lignes précise en commentaire, et la dernière ligne doit être un ```exit 0```.
-Pour lancer un programme au démarage de la machine, une ligne ```chemin/script > /dev/null 2&1 &``` doit être ajoutée juste avant le ```exit 0```.
-Pour gagner du temps, on écrit tout d'un coup à l'aide d'un _echo -e_ :
-```
-echo -e "#!/bin/sh -e\n#\n# rc.local\n#\n# This script is executed at the end of each multiuser runlevel.\n# Make sure that the script will "exit 0" on success or any other\n# value on error.\n#\n# In order to enable or disable this script just change the execution\n# bits.\n#\n# By default this script does nothing.\n/usr/bin/SeReC/serveur.exe > /dev/null 2&1 &\n/usr/bin/SeReC/serveurDesinstallation.exe > /dev/null 2&1 &\nexit 0" | sudo tee -a /etc/rc.local
-```
+````
+    char dateCalcule[100]; 
+    char dateNow[100];  
+    struct temp temp_calcule; 
+    calculTemps(&temp_calcule); 
+    time(&now); 
+    struct tm *local = localtime(&now); // local time ne fait QUE CONVERTIR 
+    sprintf(dateCalcule , "%d:%02d:%02d:%02d:%02d" , temp_calcule.an , temp_calcule.mois , temp_calcule.jour , temp_calcule.h, 
+		    temp_calcule.min); 
+    sprintf(dateNow, "%d:%02d:%02d:%02d:%02d" , local->tm_year+1900 , local->tm_mon+1 , local->tm_mday , local->tm_hour ,
+		    local->tm_min);
+    printf(" la date maintenant : %s vs la date calculee : %s " , dateNow , dateCalcule); 
+    printf(" \n la date maintenant : %02d vs la date calculee : %02d " , local->tm_min  , temp_calcule.min);
+    
+````
+Cette consiste à initialiser la première itération avant de lancer la boucle. On met dans la chaine de 
+caractère dateCalcule , la date qu'il fera dans x minutes de plus et dans la chaine date Now , la date courante à l'heure/minute
+près. Une fois cela fait on peut rentrer dans la boucle : 
 
-On termine en donnant les droit d'execution :
-```
-chmod +x /etc/rc.local
-```
-
+````
+    for(;;){
+        time(&now);
+        struct tm *local = localtime(&now); // local time ne fait QUE CONVERTIR 
+        sprintf(dateNow, "%d:%02d:%02d:%02d:%02d" , local->tm_year+1900 , local->tm_mon+1 , local->tm_mday , local->tm_hour ,
+                local->tm_min);
+            if(strcmp(dateCalcule , dateNow) == 0){
+           system("/usr/bin/SeReC/dReccur"); 
+           calculTemps(&temp_calcule);
+           sprintf(dateCalcule , "%d:%02d:%02d:%02d:%02d" , temp_calcule.an , temp_calcule.mois , temp_calcule.jour , temp_calcule.h, 
+               temp_calcule.min); 
+	}
+````
 
 
 
