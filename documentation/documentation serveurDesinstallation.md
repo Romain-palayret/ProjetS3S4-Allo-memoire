@@ -62,7 +62,7 @@ Ajouter des minutes à une date n'est pas facile. Par exemple, si on est le 28 f
 Pour faciliter ces opérations, on utilise la librairie ```<time.h>```.
 Cette librairie ajoute 2 structure permettant de manipuler les dates : time_t et tm.
 _time\_t_ est une structure permettant de stocker une date et une heure.
-_tm_ est une structrue permettantde stocker une date et une heure, mais sous un format normalisé.
+_tm_ est une structrue permettant de stocker une date et une heure, mais sous un format normalisé.
 Par exemple, une struct _time\_t_ peut contenir une heure ```12h 74min 89s``` alors qu'une struct _tm_ contiendra ```13h 15min 29s```.
 La fonction _localtime()_ permet de passer d'une structure _time\_t_ à une structure _tm_
 
@@ -81,10 +81,10 @@ typedef struct temp{
 }temp;
 ```
 
-La fonction calculTemps permet de mettre à jour une structure temps avec la date calcule à partir
+La fonction calculTemps() permet de mettre à jour une structure temps avec la date calcule à partir
 de la date actuelle + le nombre de minutes situé dans le serec.config. 
 
-On peut ensuite utiliseR la structure ainsi initialisé pour initialiser la chaineCalculee par 
+On peut ensuite utiliser la structure ainsi initialisée pour initialiser la chaine Calculée par 
 la suite. 
 
 ```
