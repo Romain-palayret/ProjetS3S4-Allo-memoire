@@ -1,3 +1,27 @@
+#!/bin/bash
+
+function chercherDansListe() 
+{
+   paquet=$1
+   cheminListe=$2
+   typeProfil=$3
+   
+   var=$(sed -n $typeProfil'p' /etc/SeReC/serec.config)
+   booleanProfil=${var##* }
+   echo "la"
+   if [[ $booleanProfil == 0 ]]
+   then
+       return 0
+   else
+      if ! grep -q -m 1 "$1" "$2"
+      then
+        return 0    
+      else
+         return 1 
+      fi
+   fi   
+}
+
 creeListeRouge
 dpkg --status | grep -e "Priority: extra" -e "Priority: optional" -B2 | sed -n '/Package/p' | sed -r 's/Package:\s(.*)/\1/' > ListeVerteTemp
 
@@ -6,5 +30,26 @@ while read line     #on lit chaque paquet  de l'entrée standard
 do
   if ! grep -q -m 1 "$line" ListeRouge  #si le paquet n'est pas au moins une fois dans ListeRouge
   then	
-    if ! grep -q -m 1 "$line" /SeReC_listes/ListeOrangeDefaut
+    if ! grep -q -m 1 "$line" /etc/SeReC/SeReC_listes/ListeOrangeDefaut
     then
+        somme=0
+        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeAdmin 7)
+        somme=$(($somme + $?))
+        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeSecretaire 8)
+        somme=$(($somme + $?))
+        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeGamer 9)
+        somme=$(($somme + $?))
+        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeMath 10)
+        somme=$(($somme + $?))
+        (chercherDansListe "$line" /etc/SeReC/SeReC_listes/ListeOrangeInge 11)
+        somme=$(($somme + $?))
+
+        if [[ $somme == 0 ]]
+        then
+            echo "$line" >>ListeVerte           #alors on ajoute le paquet à ListeVerte
+        fi
+    fi
+  fi
+done < ListeVerteTemp     #on envoie ListeVerteTemp sur l'entrée standard du while\nrm ListeVerteTemp\nrm ListeRouge
+
+
