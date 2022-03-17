@@ -29,4 +29,5 @@ est d'installer le programme sur la machine lorsque le client appelle command no
        printf(" ON arrive au niveau du pthread_create \n"); 
        pthread_create(&idThread , NULL , communication , &clientSock);
     }
-}````
+}
+````
