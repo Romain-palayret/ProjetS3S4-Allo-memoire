@@ -27,7 +27,6 @@ int communication(char nomPaquet[]){
       exit(EXIT_FAILURE);  
    }
 
-   printf(" la valeur de retour %s \n" , valeurRetour); 
 
 
    retour = atoi(valeurRetour);
@@ -35,7 +34,6 @@ int communication(char nomPaquet[]){
        perror(" LE SERVEUR N A PAS TROUVE LE PAQUET "); 
        exit(EXIT_FAILURE); 
    }
-   printf(" le paquet %s a bien ete installe sur le serveur " , nomPaquet);   
 }
 
 
