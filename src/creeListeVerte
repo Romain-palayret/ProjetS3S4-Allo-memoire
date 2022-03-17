@@ -5,7 +5,7 @@
 #--------------------------------------------
 
 #On récupère le chemin de serec.config
-cheminSerec='/usr/etc/SeReC/serec.config'
+cheminSerec='/etc/SeReC/serec.config'
 
 #On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
 echo "Veuillez saisir l'utilisateur : "
