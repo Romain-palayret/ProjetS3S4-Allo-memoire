@@ -9,12 +9,29 @@ Ce fichier contient :
 - le chemin absolu où seront stockées les listes Rouge, Orange et Verte
 - le chemin absolu ou sera stocké le log contenant l'historique des différentes installations et désinstallations causé par notre logiciel.
 - le chemin absolu de l'application
+- la liste des profils pris en compte ou non dans la création de la listeVerte.
 
-Cette liste sera amenée à évoluer dans le futur.
+## Description de la liste des profils
+Le script _creeListeVerte_ a besoin des 6 à 11 pour fonctionner.
+Si le chiffre à la fin d'une de ces lignes est égale à 0, alors on peut supprimer les paquets de la liste Orange Correspondante.
+Si au contraire le chiffre à la fin d'une de ces lignes est égale à 1, alors ill faut prendre en compte la liste Orange correspondante lors de la création de la liste Verte.
+
+Ces valeurs peuvent être modifiée à la main, directement dans le _serec.config_, ou bien en lançant le script _ajoutUser_.
+Le script _ajoutUser_ à besoin d'une ligne vide à la fin du fichier pour fonctionner, c'est pourquoi il ne faut pas supprimer la dernière ligne.
 
 ```
 temps de desinstallation : 2400
 emplacement des listes : /usr/bin/SeReC
 emplacement du Log : /usr/bin/SeReC
 emplacement de Serec : /usr/bin/SeReC
+
+Liste des profils :
+Administrateur : 0
+Secretaire : 0
+Gamer : 0
+Mathematicien : 0
+Ingenieur Audio-visuel : 0
+
+
+--Ne pas supprimer cette ligne--
 ```
