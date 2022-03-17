@@ -96,7 +96,9 @@ int main(void){
         if(strcmp(dateCalcule , dateNow) == 0){
 	
 	   system("/usr/bin/SeReC/dReccur"); 
-	   calculTemps(&temp_calcule);  
+	   calculTemps(&temp_calcule);
+	   sprintf(dateCalcule , "%d:%02d:%02d:%02d:%02d" , temp_calcule.an , temp_calcule.mois , temp_calcule.jour , temp_calcule.h, 
+		   temp_calcule.min); 
 	
 	}
     
