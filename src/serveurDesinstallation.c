@@ -8,10 +8,9 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 #include <time.h> 
-#define MINUTE_TEST 50
 
 
-int h , min , s , day , mois , an; 
+
 time_t now; // time_t est un long int permettant de stocker le nombre de seconde depuis 
 	    // le premier juin 1970 
 time_t calcule; 
