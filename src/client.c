@@ -31,7 +31,7 @@ int communication(char nomPaquet[]){
 
    retour = atoi(valeurRetour);
    if(retour == 1){
-       perror(" LE SERVEUR N A PAS TROUVE LE PAQUET "); 
+       perror(" Paquet non trouvé : "); 
        exit(EXIT_FAILURE); 
    }
 }
