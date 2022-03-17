@@ -117,7 +117,7 @@ La fonction main a pour objectif d'appliquer l'algorithme théorique présenté 
     printf(" \n la date maintenant : %02d vs la date calculee : %02d " , local->tm_min  , temp_calcule.min);
     
 ````
-Cette consiste à initialiser la première itération avant de lancer la boucle. On met dans la chaine de 
+Cette partie consiste à initialiser la première itération avant de lancer la boucle. On met dans la chaine de 
 caractère dateCalcule , la date qu'il fera dans x minutes de plus et dans la chaine date Now , la date courante à l'heure/minute
 près. Une fois cela fait on peut rentrer dans la boucle : 
 
