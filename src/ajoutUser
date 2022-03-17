@@ -5,7 +5,7 @@
 #--------------------------------------------
 
 #On récupère le chemin de serec.config
-cheminSerec='/usr/bin/serec.config'
+cheminSerec='/etc/SeReC/serec.config'
 
 #On demande de saisir le nom de l'utilisateur pour lequel on veut installer serec
 echo "Veuillez saisir l'utilisateur : "
@@ -26,10 +26,30 @@ while (($numListe == -1))
 do 
     echo -n "Saisir le numéro du profil souhaité : ";
     read numListe
-        
-    #TODO Gerer la listeOrange ici
-        
-done 
-
-echo -e " Lorsque tous les utilisateurs seront configurés,\nveuillez taper la commande suivant \"dInit\" qui désinstallera les paquets inutiles ! \n"
+    
+    case $numListe in
+        1) 
+        sed -i '7d' $cheminSerec
+        sed -i "7i\Administrateur : 1\t" $cheminSerec
+        ;;
+        2) 
+        sed -i '8d' $cheminSerec
+        sed -i "8i\Secretaire : 1\t" $cheminSerec
+        ;;
+        3) 
+        sed -i '9d' $cheminSerec
+        sed -i "9i\Gamer : 1\t" $cheminSerec
+        ;;
+        4)
+        sed -i '10d' $cheminSerec
+        sed -i "10i\Mathematicien : 1\t" $cheminSerec
+        ;;
+        5) 
+        sed -i '11d' $cheminSerec
+        sed -i "11i\Ingenieur Audio-Visuel : 1\t" $cheminSerec
+        ;;
+        *) echo "Erreur, veuillez choisir un chiffre entre 1 et 5"
+           numListe=-1;;
+    esac
+done
 
