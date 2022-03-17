@@ -52,4 +52,4 @@ do
   fi
 done < ListeVerteTemp     #on envoie ListeVerteTemp sur l'entrée standard du while\nrm ListeVerteTemp\nrm ListeRouge
 
-
+rm ListeVerteTemp
