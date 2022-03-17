@@ -81,6 +81,11 @@ typedef struct temp{
 }temp;
 ```
 
+La fonction calculTemps permet de mettre à jour une structure temps avec la date calcule à partir
+de la date actuelle + le nombre de minutes situé dans le serec.config. 
+
+On peut ensuite utiliseR la structure ainsi initialisé pour initialiser la chaineCalculee par 
+la suite. 
 
 ```
 void calculTemps (temp *Temp){      
