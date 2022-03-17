@@ -19,7 +19,7 @@ Au début du script, on récupère le chemin du fichier _serec.config_. Ce chemi
 
 ```
 #On récupère le chemin de serec.config
-cheminSerec='/usr/bin/serec.config'
+cheminSerec='/usr/etc/SeReC/serec.config'
 ```
 
 
@@ -27,7 +27,7 @@ On récupère ensuite dans une variable _chemin_ le chemin des différents scrip
 
 ```
 ##On recupere le chemin des scripts
-chemin='/usr/bin'
+chemin='/usr/bin/SeReC'
 ```
 La suite du programme est découpée en 5 partie. Ces parties correspondent à chaque modifications de fichier qu'effectue le script _lancer_ et donc à chaque fonctionnalités que ces modifications permettent.
 
