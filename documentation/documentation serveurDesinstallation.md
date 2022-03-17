@@ -29,7 +29,7 @@ while(1==1) {
 
 ### fonction lectureConfig() :
 
-La fonction lectureConfig() doit lire dans le fichier _serec.config_ et renvoier le nombre de minute entre chaque désinstallation.
+La fonction lectureConfig() doit lire dans le fichier _serec.config_ et renvoyer le nombre de minute entre chaque désinstallation.
 Ce nombre est le dernier mot de la premiere ligne du fichier _serec.config_.
 Pour le récupérer, on lit la premiere ligne du fichier, puis cherche le premier digit de la ligne.
 Une fois le digit trouvé, on suppose qu'il s'agit du dernier mot et que tous les caractères suivant sont des digits.
@@ -124,7 +124,7 @@ La fonction main a pour objectif d'appliquer l'algorithme théorique présenté 
 ````
 Cette partie consiste à initialiser la première itération avant de lancer la boucle. On met dans la chaine de 
 caractère dateCalcule , la date qu'il fera dans x minutes de plus et dans la chaine date Now , la date courante à l'heure/minute
-près. Une fois cela fait on peut rentrer dans la boucle : 
+près. Une fois cela fait on peut rentrer dans la boucle de l'algorithme du début: 
 
 ````
     for(;;){
