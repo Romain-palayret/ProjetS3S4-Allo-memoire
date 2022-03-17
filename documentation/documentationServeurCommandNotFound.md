@@ -6,15 +6,15 @@ est d'installer le programme sur la machine lorsque le client appelle command no
 
 ## Ce que ce serveur fait 
 
-- Ce serveur intercepte la demande du client initie par command not found handle 
+- Ce serveur intercepte la demande du client initiée par command not found handle 
 - Il crée un thread permettant de gérer la demande du client en question 
-- il appelle le script d'installation (autrefois appelé par le crontab dans l'ancienne version du projet ) 
+- il appelle le script d'installation 
 - il renvoit le résultat de la commande , 0 si tout s'est bien passé et 1 si il y a eu une défaillance 
 
 
 # Analyse du Programme 
 
-## Initialisation des différentes structures 
+## Initialisation de la structure de donnée du serveur
 
 ````
     struct sockaddr_in servAddr; 
@@ -24,11 +24,11 @@ est d'installer le programme sur la machine lorsque le client appelle command no
     servAddr.sin_port = htons(ServeurPort);
 ````
 
-Ici on crée la structure du serveur , cette structure servira à stocker les informations liés 
-au serveur. AF_INET signifie que l'on est ouvert aux connexions extérieurs , étant donné que le serveur
+Ici on crée la structure du serveur , cette structure servira à stocker les informations liées 
+au serveur. AF_INET signifie que l'on est ouvert aux connexions extérieures , étant donné que le serveur
 sera local , une simple adresse de loopback sur la machine suffira dans notre cas. 
 
-## Lancement de l'ecoute du serveur 
+## Lancement de l'écoute du serveur 
 
 
 ````
@@ -76,10 +76,9 @@ pourra être ajustée avec le temps.
 }
 ````
 
-Dans cette boucle on crée une structure réseau client , on calcule taille de cette structure ainsi qu'une variable thread locale
-à la boucle. On accepte ensuite un client demandant de se connecter , et on vérifie si clientSock -1. Si tout s'est bien 
+Dans cette boucle on crée une structure réseau client , on calcule la taille de cette structure et on crée une variable thread locale
+à la boucle. On accepte ensuite un client demandant de se connecter , et on vérifie si clientSock vaut -1. Si tout s'est bien 
 passé jusque là on créer un thread dans lequel on passe l'adresse du socket client ainsi créé. 
-
 
 ## Fonction Communication 
 
@@ -124,7 +123,8 @@ des messages de ce client. Dans un premier temps on attend que le client envoit 
    
    Ici on tente d'installer le paquet client en appelant le script d'installation. Si l'appel system() échoue 
    on envoit 1 au client sous forme d'une chaine de caractère. Dans le cas ou l'appel system renvoit 0 , on renvoit
-   0 sous forme de chaine de caractère au client. 
+   0 sous forme de chaine de caractère au client. Ces flags ont pour objectif de prévenir du succès ou non de l'installation. 
+   
    
    
    
