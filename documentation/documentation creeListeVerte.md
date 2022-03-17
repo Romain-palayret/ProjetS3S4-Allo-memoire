@@ -15,7 +15,7 @@ Il ne faut donc pas relancer ce script avant qu'il soit déjà fini.
 
 ### Temps d'execution
 
-Environ 20 secondes.
+Environ 1 minute.
 
 ## Description de la conception et réalisation du script
 
