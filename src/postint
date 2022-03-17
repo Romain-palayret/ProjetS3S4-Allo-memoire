@@ -5,7 +5,7 @@
 cheminSerec='/usr/bin/serec.config'
 
 
-#Le fichier lancer doit être executer dans son dossier, et pas en dehors
+#Le script postint doit être executer dans son dossier, et pas en dehors
 #TODO mettre le chemin definitif
 chemin='/usr/bin'
 
