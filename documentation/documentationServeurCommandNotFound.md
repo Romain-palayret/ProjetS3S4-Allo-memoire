@@ -58,7 +58,8 @@ pourra être ajustée avec le temps.
 
 ## Boucle Principale 
 
-````    for(;;){
+````    
+for(;;){
     
        struct sockaddr_in clientAddr; 
        socklen_t clientAddrLen = sizeof(clientAddr);
