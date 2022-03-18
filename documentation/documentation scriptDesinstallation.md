@@ -12,6 +12,6 @@ chemin=${var##* }
 Ladate=$(date)  
 echo -e \\n$Ladate \\n >>$chemin/LogInstallation.log
 
-# On installe le paquet pris en argument et on redirige la sortie standart et la sortie d'erreur dans le log.
+# On désinstalle le paquet pris en argument et on redirige la sortie standart et la sortie d'erreur dans le log.
 apt-get -y remove --purge $1 2>/dev/null >>$chemin/LogInstallation.log
 ```
